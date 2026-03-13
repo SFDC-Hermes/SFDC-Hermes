@@ -11,6 +11,8 @@
 - ⚡ Fun fact: Most of my best solutions came from debugging at 2 AM
 
 ## 🎯 What I Do
+
+```text
 Sales Cloud        ████████████████████░░░░   80%
 Lightning (LWC)    ██████████████████░░░░░░   70%
 Apex Development   ████████████████████░░░░   80%
