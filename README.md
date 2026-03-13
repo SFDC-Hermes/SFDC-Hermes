@@ -8,7 +8,6 @@
 - 💼 **2 years** of hands-on Salesforce development experience
 - 🌱 Always learning new ways to optimize Apex and LWC
 - 📝 I document everything I learn - that's why this blog exists
-- ⚡ Fun fact: Most of my best solutions came from debugging at 2 AM
 
 ## 🎯 What I Do
 
