@@ -30,6 +30,22 @@ Integration (API)  ██████████████░░░░░░�
 💬 Start a discussion
 All contributions are welcome!
 
+## 📊 GitHub Activity
+
+<p align="center">
+  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=SFDC-Hermes&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true&hide_border=true"/>
+  <img height="180em" src="https://github-readme-streak-stats.herokuapp.com/?user=SFDC-Hermes&theme=tokyonight&hide_border=true"/>
+</p>
+
+
+<p align="center">
+  <img src="https://ghchart.rshah.org/00A1E0/SFDC-Hermes" alt="GitHub Contribution Chart" />
+</p>
+<p align="center">
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=SFDC-Hermes&theme=tokyo-night&area=true&hide_border=true" />
+</p>
+
+
 📫 Let's Connect
 📧 Feel free to reach out through GitHub issues
 ⭐ Star this repo if you find it useful!
