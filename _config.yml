@@ -1,0 +1,31 @@
+remote_theme: mmistakes/minimal-mistakes
+plugins:
+  - jekyll-remote-theme
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+
+title: "Hermes Blog"
+subtitle: "Salesforce 개발 블로그"
+name: "SFDC-Hermes"
+description: "Apex, LWC, Integration 팁과 노하우"
+url: "https://sfdc-hermes.github.io"
+baseurl: "/hermes-blog"
+
+author:
+  name: "SFDC-Hermes"
+  bio: "Salesforce Developer ⚡"
+
+timezone: Asia/Seoul
+locale: "ko-KR"
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
