@@ -7,9 +7,9 @@ plugins:
   - jekyll-include-cache
 
 title: "Hermes Blog"
-subtitle: "Salesforce 개발 블로그"
+subtitle: "Salesforce Developer Blog"
 name: "SFDC-Hermes"
-description: "Apex, LWC, Integration 팁과 노하우"
+description: "Apex, LWC, Integration"
 url: "https://SFDC-Hermes.github.io"
 baseurl: "/Lightning-Hermes"
 
