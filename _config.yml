@@ -11,7 +11,7 @@ subtitle: "Salesforce Developer Blog"
 name: "SFDC-Hermes"
 description: "Apex, LWC, Integration"
 url: "https://SFDC-Hermes.github.io"
-baseurl: "/Lightning-Hermes"
+baseurl: "SFDC-Hermes"
 
 author:
   name: "SFDC-Hermes"
