@@ -1,7 +1,7 @@
 ---
 layout: home
 author_profile: true
-title: "Welcome to Hermes Blog"
+title: "Welcome to Salesforce-Hermes Blog"
 ---
 
-Salesforce 개발 관련 팁과 노하우를 공유합니다 ⚡
+⚡ Salesforce Dev Tips & Best Practices ⚡
