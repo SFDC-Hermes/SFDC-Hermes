@@ -18,26 +18,13 @@ Lightning (LWC)    ██████████████████░░�
 Apex Development   ████████████████████░░░░   80%
 Integration (API)  ██████████████░░░░░░░░░░   55%
 ```
-🛠️ Tech Stack
-Salesforce
-<img src="https://img.shields.io/badge/Salesforce-00A1E0?style=for-the-badge&amp;logo=salesforce&amp;logoColor=white" alt="Salesforce">
+## 🛠️ Tech Stack
 
-<img src="https://img.shields.io/badge/Apex-1797C0?style=for-the-badge&amp;logo=salesforce&amp;logoColor=white" alt="Apex">
+### Salesforce
+![Salesforce](https://img.shields.io/badge/Salesforce-00A1E0?style=for-the-badge&logo=salesforce&logoColor=white) ![Apex](https://img.shields.io/badge/Apex-1797C0?style=for-the-badge&logo=salesforce&logoColor=white) ![LWC](https://img.shields.io/badge/Lightning_Web_Components-00A1E0?style=for-the-badge&logo=salesforce&logoColor=white) ![SOQL](https://img.shields.io/badge/SOQL-00A1E0?style=for-the-badge&logo=salesforce&logoColor=white)
 
-<img src="https://img.shields.io/badge/Lightning_Web_Components-00A1E0?style=for-the-badge&amp;logo=salesforce&amp;logoColor=white" alt="LWC">
-
-<img src="https://img.shields.io/badge/SOQL-00A1E0?style=for-the-badge&amp;logo=salesforce&amp;logoColor=white" alt="SOQL">
-
-Languages & Tools
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&amp;logo=javascript&amp;logoColor=black" alt="JavaScript">
-
-<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&amp;logo=html5&amp;logoColor=white" alt="HTML5">
-
-<img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&amp;logo=css3&amp;logoColor=white" alt="CSS3">
-
-<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&amp;logo=git&amp;logoColor=white" alt="Git">
-
-<img src="https://img.shields.io/badge/VS_Code-007ACC?style=for-the-badge&amp;logo=visual-studio-code&amp;logoColor=white" alt="VS Code">
+### Languages & Tools
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white) ![VS Code](https://img.shields.io/badge/VS_Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 
 📂 Repository Structure
 📚 What You'll Find Here
