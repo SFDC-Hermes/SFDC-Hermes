@@ -9,8 +9,8 @@ title: "Hermes Blog"
 subtitle: "Salesforce 개발 블로그"
 name: "SFDC-Hermes"
 description: "Apex, LWC, Integration 팁과 노하우"
-url: "https://sfdc-hermes.github.io"
-baseurl: "/hermes-blog"
+url: "https://SFDC-Hermes.github.io"
+baseurl: "/Lightning-Hermes"
 
 author:
   name: "SFDC-Hermes"
