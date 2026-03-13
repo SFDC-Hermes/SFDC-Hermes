@@ -21,7 +21,7 @@ This component extends the standard `lightning-datatable` to support inline edit
 
 This component requires the **toggleType** component to work properly.
 
-👉 [toggleType Component](https://github.com/SFDC-Hermes/Lightning-Hermes/tree/main/SFDC-LWC/toggleType)
+👉 [toggleType Component](https://github.com/SFDC-Hermes/Lightning-Hermes/tree/main/SFDC-LWC/ToggleType)
 
 Make sure to deploy both components together:
 - `customDatatable`
@@ -29,7 +29,7 @@ Make sure to deploy both components together:
 
 ## Source Code
 
-👉 [View on GitHub](https://github.com/SFDC-Hermes/Lightning-Hermes/tree/main/SFDC-LWC/customDatatable)
+👉 [View on GitHub](https://github.com/SFDC-Hermes/Lightning-Hermes/tree/main/SFDC-LWC/CustomDatatable)
 
 ## Features
 
