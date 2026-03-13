@@ -4,6 +4,7 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-feed
+  - jekyll-include-cache
 
 title: "Hermes Blog"
 subtitle: "Salesforce 개발 블로그"
@@ -15,22 +16,9 @@ baseurl: "/Lightning-Hermes"
 author:
   name: "SFDC-Hermes"
   bio: "Salesforce Developer ⚡"
-  # 👇 이것들 추가하면 좋아요
-  location: "Korea"
-  links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/SFDC-Hermes"
 
 timezone: Asia/Seoul
 locale: "ko-KR"
-
-# 👇 이것도 추가 권장
-markdown: kramdown
-highlighter: rouge
-
-# 👇 검색 기능 추가
-search: true
 
 defaults:
   - scope:
