@@ -17,6 +17,7 @@ Sales Cloud        ████████████████████�
 Lightning (LWC)    ██████████████████░░░░░░   70%
 Apex Development   ████████████████████░░░░   80%
 Integration (API)  ██████████████░░░░░░░░░░   55%
+```
 🛠️ Tech Stack
 Salesforce
 <img src="https://img.shields.io/badge/Salesforce-00A1E0?style=for-the-badge&amp;logo=salesforce&amp;logoColor=white" alt="Salesforce">
