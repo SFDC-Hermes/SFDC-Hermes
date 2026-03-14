@@ -26,7 +26,9 @@ defaults:
       type: posts
     values:
       layout: single
-      author_profile: true
+      author_profile: true # 왼쪽 프로필 노출
+      sidebar:
+        nav: "sidebar" # _data/navigation.yml의 sidebar 항목 사용
       read_time: true
       comments: true
       share: true
