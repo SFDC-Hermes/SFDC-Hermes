@@ -8,15 +8,15 @@ header:
   excerpt: "Salesforce Developer | Application Architect | AgentBlazer Legend"
 
 cert_row:
-  - image_path: /assets/images/AA_Cert.png
+  - image_path: /assets/images/Application_Cert.png
     alt: "Application Architect"
     title: "Application Architect"
-  - image_path: /assets/images/AS_Cert.png
+  - image_path: /assets/images/Agetnforce_Cert.png
     alt: "Agentforce"
-    title: "Agentforce Legend"
-  - image_path: "https://developer.salesforce.com/resources2/certification-site/images/cert_logo_certified_platform_developer_ii_rgb.png"
+    title: "AgentBlazer Legend"
+  - image_path: /assets/images/Developer_Cert.png
     alt: "PD2"
-    title: "Certified PD II"
+    title: "Certified Platform Developer II"
 ---
 
 # 👋 Welcome! I'm Hermes.
