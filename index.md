@@ -3,12 +3,12 @@ layout: home
 author_profile: true
 title: "Innovating the Salesforce Ecosystem"
 header:
-  overlay_color: "Black" 
+  overlay_color: "#000"
   overlay_filter: "0.5"
   excerpt: "Salesforce Developer | Application Architect | AgentBlazer Legend"
 ---
 
-<link rel="stylesheet" href="{{ '/customs/css/main.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/hermes-style.css' | relative_url }}">
 
 # 👋 Welcome! I'm Hermes.
 
@@ -17,7 +17,7 @@ I am a **Salesforce Developer** who obsesses over clean code and scalable archit
 ### 🏆 Professional Achievements
 
 <div class="cert-container">
-  {% for cert in site.data.certs %}
+  {% for cert in site.data.mycerts %}
   <div class="cert-item">
     <div class="cert-left">
       <img src="{{ cert.image | relative_url }}" class="cert-icon">
@@ -34,12 +34,4 @@ I am a **Salesforce Developer** who obsesses over clean code and scalable archit
 </div>
 
 ---
-
-### 🛠️ Technical Focus
-* **Apex Excellence:** Architecting reusable and performant backend logic.
-* **LWC Mastery:** Crafting high-speed, intuitive user interfaces.
-* **AI & Automation:** Mastering Agentforce to lead the next generation of Salesforce.
-
----
-
 ## 📂 Recent Posts
