@@ -2,12 +2,14 @@
     date: "Issued Feb 2026"
     alt: "Application Architect"
     title: "Salesforce Certified Application Architect"
-    statis: "Active"
+    status: "Active"
   - image: /assets/images/Agentforce_Cert.png
     date: "Issued Oct 2024"
     alt: "Agentforce"
     title: "Salesforce Certified Agentforce Specialist"
+    status: "Active"
   - image: /assets/images/Developer_Cert.png
     date: "Issued Jul 2025"
     alt: "PD2"
     title: "Salesforce Certified Platform Developer II"
+    status: "Active"
