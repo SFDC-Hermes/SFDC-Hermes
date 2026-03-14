@@ -8,7 +8,7 @@
 }
 .cert-left { display: flex; align-items: center; gap: 20px; }
 .cert-icon { width: 50px !important; height: 50px !important; margin: 0 !important; }
-.cert-info h4 { margin: 0 0 5px 0 !important; font-size: 1rem; color: #fff !important; }
+.cert-info h4 { margin: 0 0 5px 0 !important; font-size: 1rem; color: black !important; }
 .cert-info p { margin: 0 !important; font-size: 0.8rem; color: #888; }
 .cert-right .status-badge {
   padding: 4px 10px;
