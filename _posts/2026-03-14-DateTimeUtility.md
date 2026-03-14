@@ -62,7 +62,7 @@ public static String toDateTimeInUserTimezoneFormatted(DateTime datetimeValue, S
 📂 Source Code & Repository
 You can find the full class definition and meta-xml files in my Lightning-Hermes repository:
 
-👉 View Full Class on GitHub
+👉 [View Full Class on GitHub](https://github.com/SFDC-Hermes/Lightning-Hermes/tree/main/SFDC-Apex/DateTimeUtility)
 
 💡 Practical Use Case
 When querying records created "Today" for a Korean user (GMT+9), simply passing Date.today() in SOQL misses the first 9 hours of the day. Use this utility instead:
