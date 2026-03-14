@@ -6,25 +6,20 @@ plugins:
   - jekyll-feed
   - jekyll-include-cache
 
-title: "Hermes Blog"
-subtitle: "Salesforce Developer Blog"
-name: "SFDC-Hermes"
-description: "Apex, LWC, Integration"
+title: "Hermes' DevLog"
+subtitle: "Salesforce Architect & Developer"
 url: "https://sfdc-hermes.github.io"
 baseurl: "/SFDC-Hermes"
-minimal_mistakes_skin: "contrast"
+minimal_mistakes_skin: "contrast" 
 
 author:
-  name: "SFDC-Hermes"
-  bio: "Salesforce Developer ⚡"
+  name: "Hermes"
+  bio: "Salesforce Developer | **Agentforce Legend** ⚡"
   location: "Seoul, Korea"
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/SFDC-Hermes"
-
-timezone: Asia/Seoul
-locale: "ko-KR"
 
 defaults:
   - scope:
@@ -38,11 +33,3 @@ defaults:
       read_time: true
       comments: true
       share: true
-
-cert_features:
-  - image_path: "/assets/images/Application_Cert.png"
-    alt: "Application Architect"
-    title: "Application Architect"
-  - image_path: "/assets/images/Agentforce_Cert.png"
-    alt: "Agentforce"
-    title: "Agentforce Specialist"
