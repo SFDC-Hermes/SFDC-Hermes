@@ -1,7 +1,7 @@
 ---
 layout: category
 title: "Lightning Web Component"
-category: lwc
+taxonomy: LWC
 permalink: /categories/lwc/
 author_profile: true
 sidebar:
