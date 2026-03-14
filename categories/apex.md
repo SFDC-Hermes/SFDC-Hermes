@@ -1,7 +1,7 @@
 ---
 layout: category
 title: "Apex Development"
-category: apex
+taxonomy: Apex
 permalink: /categories/apex/
 author_profile: true
 sidebar:

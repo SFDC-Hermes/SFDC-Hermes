@@ -3,7 +3,7 @@ layout: single
 title: "Salesforce Apex: Mastering Global Timezone Conversions"
 date: 2026-03-14
 categories:
-  - SFDC-Apex
+  - Apex
 tags:
   - Apex
   - Salesforce
