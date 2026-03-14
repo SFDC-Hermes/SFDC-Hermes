@@ -1,0 +1,20 @@
+.cert-container { margin-top: 30px; border-top: 1px solid rgba(128, 128, 128, 0.3); }
+.cert-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+}
+.cert-left { display: flex; align-items: center; gap: 20px; }
+.cert-icon { width: 55px !important; height: 55px !important; margin: 0 !important; }
+.cert-info h4 { margin: 0 0 5px 0 !important; font-size: 1.05rem; color: #fff !important; }
+.cert-info p { margin: 0 !important; font-size: 0.85rem; color: #999; }
+.cert-right .status-badge {
+  padding: 5px 12px;
+  border: 1px solid #0050FF;
+  color: #0050FF;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
