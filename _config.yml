@@ -40,9 +40,9 @@ defaults:
       share: true
 
 cert_features:
-  - image_path: "/assets/images/AA Cert.png"
+  - image_path: "/assets/images/Application_Cert.png"
     alt: "Application Architect"
     title: "Application Architect"
-  - image_path: "/assets/images/AS Cert.png"
+  - image_path: "/assets/images/Agentforce_Cert.png"
     alt: "Agentforce"
     title: "Agentforce Specialist"
