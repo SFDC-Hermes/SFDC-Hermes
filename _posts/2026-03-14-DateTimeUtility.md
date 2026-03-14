@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Salesforce Apex: Mastering Global Timezone Conversions with a Robust Utility"
+title: "Salesforce Apex: Mastering Global Timezone Conversions"
 date: 2026-03-14
 categories:
   - SFDC-Apex
@@ -8,27 +8,22 @@ tags:
   - Apex
   - Salesforce
   - Timezone
-  - Development
   - CleanCode
 ---
 
-## 🌎 Overview: The GMT Challenge in Salesforce
-
-In the Salesforce ecosystem, the database stores all `DateTime` fields in **GMT (UTC)**. While this ensures data consistency, it often creates a gap between backend logic and the end user's reality.
-
-Have you ever faced data integrity issues when filtering a SOQL query by "Today"? If you don't account for the user's timezone offset, you might miss hours of critical data. To solve this, I've developed a centralized **DateTimeUtility** class that bridges the gap between GMT and Local Timezones.
+## 🌎 Overview: The GMT Challenge
+In Salesforce, the database stores all `DateTime` fields in **GMT (UTC)**. This often creates a gap when filtering data based on a user's local timezone. To solve this, I developed a centralized **DateTimeUtility** class.
 
 ## 🚀 Key Features
-
-- **SOQL Optimization:** Calculate the exact GMT moments for the Start and End of a day based on a user's local timezone.
-- **Context Awareness:** Automatically detects and applies the `UserInfo` timezone or a specific user's timezone.
-- **Clean API:** A simple, static utility that can be called from any Apex Trigger or Service Layer.
+- **SOQL Optimization:** Precise GMT calculation for Start/End of Day.
+- **Context Awareness:** Automatically detects `UserInfo` timezone.
+- **Static Utility:** Easy to call from any Trigger or Service Layer.
 
 ---
 
 ## 💻 Core Implementation
 
-While the full source code is available on GitHub, here are the most critical methods for handling **Global Data Integrity**:
+The most critical part of this utility is ensuring **Global Data Integrity** by accounting for timezone offsets during SOQL filtering.
 
 ```java
 /**
@@ -55,19 +50,17 @@ public static String toDateTimeInUserTimezoneFormatted(DateTime datetimeValue, S
         List<User> users = [SELECT TimeZoneSidKey FROM User WHERE Id = :userId LIMIT 1];
         tz = (!users.isEmpty()) ? TimeZone.getTimeZone(users[0].TimeZoneSidKey) : UserInfo.getTimeZone();
     }
-    
     return datetimeValue.format('yyyy-MM-dd HH:mm:ss', tz.getId());
 }
-
 📂 Source Code & Repository
-You can find the full class definition and meta-xml files in my Lightning-Hermes repository:
+The full source code, including meta-xml and unit tests, is available in my repository:
 
-👉 [View Full Class on GitHub](https://github.com/SFDC-Hermes/Lightning-Hermes/tree/main/SFDC-Apex/DateTimeUtility)
+👉 View on GitHub
 
 💡 Practical Use Case
-When querying records created "Today" for a Korean user (GMT+9), simply passing Date.today() in SOQL misses the first 9 hours of the day. Use this utility instead:
+When querying records created "Today" for a Korean user (GMT+9), using Date.today() misses the first 9 hours. Use this instead:
 
 Java
 DateTime startOfDay = DateTimeUtility.getStartOfDayInGmt(Date.today());
 List<Account> accounts = [SELECT Id FROM Account WHERE CreatedDate >= :startOfDay];
-This utility is part of my continuous effort to build a "Clean Apex" framework. If you have any questions or suggestions for timezone handling, feel free to reach out!
+This utility is part of my effort to build a "Clean Apex" framework. Feel free to reach out with any questions!
