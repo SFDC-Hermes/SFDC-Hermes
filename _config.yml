@@ -12,10 +12,16 @@ name: "SFDC-Hermes"
 description: "Apex, LWC, Integration"
 url: "https://sfdc-hermes.github.io"
 baseurl: "/SFDC-Hermes"
+minimal_mistakes_skin: "contrast"
 
 author:
   name: "SFDC-Hermes"
   bio: "Salesforce Developer ⚡"
+  location: "Seoul, Korea"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/SFDC-Hermes"
 
 timezone: Asia/Seoul
 locale: "ko-KR"
@@ -26,9 +32,20 @@ defaults:
       type: posts
     values:
       layout: single
-      author_profile: true # 왼쪽 프로필 노출
+      author_profile: true
       sidebar:
         nav: "sidebar"
       read_time: true
       comments: true
       share: true
+
+cert_features:
+  - image_path: "https://developer.salesforce.com/resources2/certification-site/images/cert_logo_certified_administrator_rgb.png"
+    alt: "Admin"
+    title: "Certified Admin"
+  - image_path: "https://developer.salesforce.com/resources2/certification-site/images/cert_logo_certified_platform_developer_i_rgb.png"
+    alt: "PD1"
+    title: "Certified PD I"
+  - image_path: "https://developer.salesforce.com/resources2/certification-site/images/cert_logo_certified_data_architect_rgb.png"
+    alt: "Data Architect"
+    title: "Data Architect"
