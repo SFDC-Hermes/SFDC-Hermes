@@ -1,15 +1,19 @@
 # _data/navigation.yml
 main:
+  - title: "Salesforce"
+    url: /categories/salesforce/
   - title: "Apex"
     url: /categories/apex/
   - title: "LWC"
     url: /categories/lwc/
   - title: "External Libraries"
     url: /categories/external-libraries/
-  - title: "Salesforce"
-    url: /categories/salesforce/
 
 sidebar:
+  - title: "Knowledge"
+    children:
+      - title: "About Salesforce"
+        url: /categories/salesforce/
   - title: "Development"
     children:
       - title: "Apex"
@@ -18,7 +22,3 @@ sidebar:
         url: /categories/lwc/
       - title: "External Libraries"
         url: /categories/external-libraries/
-  - title: "Knowledge"
-    children:
-      - title: "Salesforce Overview"
-        url: /categories/salesforce/

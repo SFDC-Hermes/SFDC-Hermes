@@ -1,0 +1,11 @@
+# Salesforce DX
+.sfdx/
+.sf/
+.sflptr/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
