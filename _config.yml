@@ -40,12 +40,9 @@ defaults:
       share: true
 
 cert_features:
-  - image_path: "https://developer.salesforce.com/resources2/certification-site/images/cert_logo_certified_administrator_rgb.png"
-    alt: "Admin"
-    title: "Certified Admin"
-  - image_path: "https://developer.salesforce.com/resources2/certification-site/images/cert_logo_certified_platform_developer_i_rgb.png"
-    alt: "PD1"
-    title: "Certified PD I"
-  - image_path: "https://developer.salesforce.com/resources2/certification-site/images/cert_logo_certified_data_architect_rgb.png"
-    alt: "Data Architect"
-    title: "Data Architect"
+  - image_path: "/assets/images/AA Cert.png"
+    alt: "Application Architect"
+    title: "Application Architect"
+  - image_path: "/assets/images/AS Cert.png"
+    alt: "Agentforce"
+    title: "Agentforce Specialist"
