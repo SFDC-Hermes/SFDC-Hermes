@@ -1,6 +1,5 @@
 ---
 layout: home
-head_scripts: /assets/css/main.css
 author_profile: true
 title: "Innovating the Salesforce Ecosystem"
 header:
@@ -8,6 +7,8 @@ header:
   overlay_filter: "0.5"
   excerpt: "Salesforce Developer | Application Architect | AgentBlazer Legend"
 ---
+
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 
 # 👋 Welcome! I'm Hermes.
 
@@ -33,7 +34,6 @@ I am a **Salesforce Developer** who obsesses over clean code and scalable archit
 </div>
 
 ---
-## 📂 Recent Posts
 
 ### 🛠️ Technical Focus
 * **Apex Excellence:** Architecting reusable and performant backend logic.
