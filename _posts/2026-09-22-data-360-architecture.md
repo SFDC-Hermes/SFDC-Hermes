@@ -30,3 +30,15 @@ Data in Data Cloud does not magically appear in a usable state. It flows through
 └────────────────────────┘                      └──────────────────────┘                     └──────────────────────┘
     (Data Stream)                                (Raw / Tabular Schema)                       (Harmonized / Unified)
 ```
+
+### 1.1 Data Streams (The Ingestion Pipeline)
+
+A Data Stream is the active configuration that connects an external data source (such as Salesforce CRM, AWS S3, Marketing Cloud, or an external database) to Data Cloud.
+It handles scheduling (Batch) or near-real-time streaming.
+Every Data Stream writes its incoming data directly into a corresponding DLO.
+
+### 1.2 DLO (Data Lake Object): The Raw Storage Layer
+
+A DLO (Data Lake Object) is a physical, tabular storage container inside the Data Cloud data lake.
+Structure: A DLO strictly mirrors the schema of the incoming source dataset. If your source CSV or API payload has 10 columns, the DLO will store those exact 10 columns.
+Role: It acts as the raw staging ground. No identity resolution or complex cross-object joining happens at the DLO level.
