@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Salesforce Data 360 Architecture: Decoding Data Streams, DLOs, DMOs, Queries & Pricing"
-date: 2026-10-06
+date: 2026-09-20
 categories:
   - Development
 tags:
