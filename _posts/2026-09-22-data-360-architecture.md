@@ -42,3 +42,54 @@ Every Data Stream writes its incoming data directly into a corresponding DLO.
 A DLO (Data Lake Object) is a physical, tabular storage container inside the Data Cloud data lake.
 Structure: A DLO strictly mirrors the schema of the incoming source dataset. If your source CSV or API payload has 10 columns, the DLO will store those exact 10 columns.
 Role: It acts as the raw staging ground. No identity resolution or complex cross-object joining happens at the DLO level.
+
+
+### 1.3 DMO (Data Model Object): The Harmonized Semantic Layer
+
+A **DMO** (Data Model Object) is a virtual, harmonized business entity (e.g., *Individual*, *Account*, *Order*, *Engagement*) that maps to one or more DLOs.
+
+* **The Mapping Step:** After data lands in a DLO, developers perform **Data Mapping**—linking source DLO fields (e.g., `cust_first_name`) to standard target DMO attributes (e.g., `Individual.FirstName`).
+* **Why DMOs Matter:** Features like **Segmentation, Identity Resolution (Profile Unification), and Agentforce Grounding** do not look at DLOs; they operate strictly on DMOs. Multiple DLOs (e.g., Web Signups and In-Store POS data) can be mapped into a single unified `Individual` DMO.
+
+---
+
+## 2. Querying & Calling Data Cloud: How to Fetch Data
+
+Once your data is modeled into DMOs, how do external systems, Apex code, or AI agents pull that data? Data Cloud provides distinct mechanisms depending on the latency and architecture required.
+
+### 2.1 ANSI SQL via Data Cloud Query API (REST API)
+
+For heavy analytical queries, reporting, or external system integration, Data Cloud provides a native **ANSI SQL Query API**.
+
+* **Endpoint:** `/services/data/v61.0/ssot/query`
+* **Example Query:**
+```sql
+SELECT 
+    SSOT__Customer__dlm.SSOT__FirstName__c, 
+    SSOT__Customer__dlm.SSOT__Email__c 
+FROM 
+    SSOT__Customer__dlm 
+WHERE 
+    SSOT__Customer__dlm.SSOT__Country__c = 'KR'
+LIMIT 100;
+
+```
+
+
+* **Use Case:** Pulling aggregated customer insights or searching large datasets asynchronously.
+
+### 2.2 Real-time Data Graph API
+
+For low-latency interactions (such as an Agentforce Agent needing instant customer context mid-conversation), Data Cloud exposes **Data Graphs**.
+
+* Instead of writing complex SQL joins on the fly, a Data Graph pre-links a Profile DMO with its related Engagement and Order DMOs into a hierarchical graph tree.
+* When invoked, it returns a hyper-fast JSON payload containing the unified customer profile and their recent history in milliseconds.
+
+### 2.3 Zero-Copy Queries (BYOL)
+
+If your enterprise data resides in AWS Redshift, Snowflake, or Google BigQuery, you don't even need to ingest it into Data Cloud storage.
+
+* Using **Zero-Copy Data Federation**, Data Cloud queries the external data lake directly via virtualized connections. The query engine pushes computation down to the external data warehouse and streams back only the requested result set.
+
+---
+
