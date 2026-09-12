@@ -93,3 +93,43 @@ If your enterprise data resides in AWS Redshift, Snowflake, or Google BigQuery, 
 
 ---
 
+## 3. Understanding Data Cloud Pricing & Credit Consumption
+
+Unlike traditional Salesforce storage (which is billed strictly per Terabyte per month), Data Cloud operates primarily on a **Consumption-Based Credit Model (Data Service Credits)**.
+
+Every platform action consumes variable credits based on processing volume and complexity.
+
+### 3.1 The Credit Multiplier Formula
+
+Salesforce calculates credit consumption based on the number of rows processed, queried, or analyzed, multiplied by a feature-specific factor per 1 million rows:
+
+$$\text{Credits Consumed} = \left( \frac{\text{Rows Processed}}{1,000,000} \right) \times \text{Feature Multiplier}$$
+
+### 3.2 Key Credit-Consuming Operations
+
+Not all actions cost the same. Architects must design pipelines carefully to avoid burning through credit allocations:
+
+1. **Identity Resolution (Profile Unification):**
+* *Cost Factor:* **Extremely High.** Merging millions of duplicate customer profiles requires heavy graph-matching computations. Initial rule-set runs consume massive amounts of credits.
+
+
+2. **Streaming Ingestion vs. Batch Ingestion:**
+* *Cost Factor:* **Streaming costs 3x to 5x more than batch.** Near-real-time streaming event ingestion continuously consumes compute resources, whereas scheduled batch loads aggregate rows efficiently.
+
+
+3. **Calculated Insights & Segmentation:**
+* *Cost Factor:* **Moderate to High.** Running scheduled batch calculations (e.g., calculating lifetime value across 20 million order rows) or publishing marketing segments consumes credits proportional to the row count.
+
+
+4. **Data Queries:**
+* *Cost Factor:* Low per query, but heavy automated loops or poorly indexed queries can accumulate costs rapidly.
+
+
+
+### 3.3 Architect’s Cost Optimization Best Practices
+
+* **Adopt a "Batch-First" Mindset:** Never route an integration pipeline through streaming ingestion unless real-time latency is a strict business requirement (e.g., live web tracking). If data can wait an hour or a day, use batch data streams.
+* **Pause Identity Resolution During Mass Updates:** Avoid letting every single data stream update trigger an expensive full-refresh of your Identity Resolution ruleset. Pause rules, ingest all streams, and run the resolution once.
+* **Monitor via Digital Wallet:** Always track credit burn rates using the native **Salesforce Digital Wallet** to prevent unexpected overage bills.
+
+---
