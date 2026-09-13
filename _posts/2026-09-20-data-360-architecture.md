@@ -133,3 +133,7 @@ Not all actions cost the same. Architects must design pipelines carefully to avo
 * **Monitor via Digital Wallet:** Always track credit burn rates using the native **Salesforce Digital Wallet** to prevent unexpected overage bills.
 
 ---
+
+## 4. Conclusion
+
+Mastering Salesforce Data Cloud requires looking past the UI and understanding the underlying mechanics. By respecting the strict data flow from Data Streams to DLOs and harmonized DMOs, choosing the correct query mechanism (ANSI SQL vs. Data Graphs vs. Zero-Copy), and designing pipelines with Credit Consumption in mind, architects can build scalable, high-performance data platforms that safely power enterprise AI and Agentforce.
