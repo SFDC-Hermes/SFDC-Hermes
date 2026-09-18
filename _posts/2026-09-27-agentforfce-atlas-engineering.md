@@ -24,3 +24,11 @@ When a user initiates a conversation, they are interacting with the **Main Agent
 *   **The Sub-Agent (Domain Expert):** A specialized boundary containing its own specific Instructions and a restricted pool of Actions (e.g., an *Order Management Sub-Agent* vs. a *Technical Support Sub-Agent*).
 **Architectural Imperative:**
 Sub-Agent descriptions must be mutually exclusive. If a *Billing Sub-Agent* and a *Contract Sub-Agent* both have instructions mentioning "invoice adjustments," Atlas will experience a routing collision (Ambiguity Fallback), forcing the engine to halt and ask the user for clarification rather than acting autonomously.
+
+**## 2. The ReAct Loop: Anatomy of an Execution
+Once Atlas hands the context over to the appropriate Sub-Agent, it enters the **ReAct Loop**. This is where probabilistic AI meets deterministic execution.
+Instead of immediately generating a final response, Atlas loops through three distinct phases:
+1.  **Thought (Reasoning):** The engine analyzes the user's request against the Sub-Agent's instructions and the available Action descriptions. *("The user wants to cancel Order #123. I must first check the order status using `Get_Order_Status`, then verify if it is eligible for cancellation.")*
+2.  **Action (Execution):** Atlas structures a JSON payload and fires the selected declarative tool (an Apex `@InvocableMethod`, a Flow, or a Data Cloud Vector Search).
+3.  **Observation (Ingestion):** The system waits for the execution result. Atlas ingests the returned payload and evaluates it. If the goal is met, it breaks the loop and generates the final response. If the data is incomplete, it initiates another Thought phase.
+---**
