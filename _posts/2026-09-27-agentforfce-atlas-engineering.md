@@ -33,4 +33,5 @@ Instead of immediately generating a final response, Atlas loops through three di
 1.  **Thought (Reasoning):** The engine analyzes the user's request against the Sub-Agent's instructions and the available Action descriptions. *("The user wants to cancel Order #123. I must first check the order status using `Get_Order_Status`, then verify if it is eligible for cancellation.")*
 2.  **Action (Execution):** Atlas structures a JSON payload and fires the selected declarative tool (an Apex `@InvocableMethod`, a Flow, or a Data Cloud Vector Search).
 3.  **Observation (Ingestion):** The system waits for the execution result. Atlas ingests the returned payload and evaluates it. If the goal is met, it breaks the loop and generates the final response. If the data is incomplete, it initiates another Thought phase.
----**
+
+
