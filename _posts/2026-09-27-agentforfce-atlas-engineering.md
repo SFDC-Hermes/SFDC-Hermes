@@ -18,6 +18,7 @@ The true core of Agentforce is the **Atlas Reasoning Engine**. Atlas is not a la
 To build enterprise-grade agents, architects must understand how Atlas routes intents, manages memory, and executes actions.
 
 ## 1. The Routing Architecture: Main Agent to Sub-Agents
+
 Previous iterations of conversational AI relied on rigid NLP intent mapping or flattened "Topics." Agentforce has evolved into a hierarchical **Multi-Agent Architecture**.
 When a user initiates a conversation, they are interacting with the **Main Agent** (e.g., the Copilot or Service Agent). The Main Agent does not execute business logic directly. Its primary job is semantic routing: classifying the user's intent and delegating the conversation to a specialized **Sub-Agent**.
 *   **The Main Agent:** Evaluates the initial prompt against the descriptions of all available Sub-Agents.
@@ -25,7 +26,8 @@ When a user initiates a conversation, they are interacting with the **Main Agent
 **Architectural Imperative:**
 Sub-Agent descriptions must be mutually exclusive. If a *Billing Sub-Agent* and a *Contract Sub-Agent* both have instructions mentioning "invoice adjustments," Atlas will experience a routing collision (Ambiguity Fallback), forcing the engine to halt and ask the user for clarification rather than acting autonomously.
 
-**## 2. The ReAct Loop: Anatomy of an Execution
+## 2. The ReAct Loop: Anatomy of an Execution
+
 Once Atlas hands the context over to the appropriate Sub-Agent, it enters the **ReAct Loop**. This is where probabilistic AI meets deterministic execution.
 Instead of immediately generating a final response, Atlas loops through three distinct phases:
 1.  **Thought (Reasoning):** The engine analyzes the user's request against the Sub-Agent's instructions and the available Action descriptions. *("The user wants to cancel Order #123. I must first check the order status using `Get_Order_Status`, then verify if it is eligible for cancellation.")*
