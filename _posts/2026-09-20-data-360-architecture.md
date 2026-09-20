@@ -62,7 +62,9 @@ Once your data is modeled into DMOs, how do external systems, Apex code, or AI a
 For heavy analytical queries, reporting, or external system integration, Data Cloud provides a native **ANSI SQL Query API**.
 
 * **Endpoint:** `/services/data/v61.0/ssot/query`
+
 * **Example Query:**
+
 ```sql
 SELECT 
     SSOT__Customer__dlm.SSOT__FirstName__c, 
@@ -103,7 +105,7 @@ Every platform action consumes variable credits based on processing volume and c
 
 Salesforce calculates credit consumption based on the number of rows processed, queried, or analyzed, multiplied by a feature-specific factor per 1 million rows:
 
-$$\text{Credits Consumed} = \left( \frac{\text{Rows Processed}}{1,000,000} \right) \times \text{Feature Multiplier}$$
+> **Credits Consumed = (Rows Processed / 1,000,000) × Feature Multiplier**
 
 ### 3.2 Key Credit-Consuming Operations
 

@@ -55,6 +55,7 @@ This is a glossary of terms to help you understand documentation related to Agen
 
 ## 2. The Rosetta Stone: Industry Standard vs. Agentforce
 When migrating an AI architecture from an open-source stack (e.g., LangGraph + LangSmith + OpenAI) to Salesforce Agentforce, here is how the components map to one another:
+
 | Industry Standard (Open Source / OpenAI) | Salesforce Agentforce Equivalent | Architect's Note |
 | :--- | :--- | :--- |
 | **LangChain (Framework)** | **Agentforce Platform** | The underlying ecosystem that connects prompts, models, and tools together. |
