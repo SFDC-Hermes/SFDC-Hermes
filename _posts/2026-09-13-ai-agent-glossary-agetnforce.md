@@ -67,7 +67,6 @@ When migrating an AI architecture from an open-source stack (e.g., LangGraph + L
 | **Agent Observability (LangSmith)** | **Agentforce Analytics / Testing Console** | Native dashboards for monitoring session traces, action invocation success rates, and prompt quality. |
 | **Vector Database (Pinecone, Milvus)** | **Data Cloud Vector Engine** | Salesforce's native storage for multidimensional embeddings of unstructured data (PDFs, knowledge articles). |
 | **Guardrails & Content Filtering** | **Einstein Trust Layer** | Salesforce's enterprise security perimeter (Zero-Data Retention, PII masking, toxicity scoring). |
----
 
 ## 3. Deep Dive: Key Architectural Differences
 
