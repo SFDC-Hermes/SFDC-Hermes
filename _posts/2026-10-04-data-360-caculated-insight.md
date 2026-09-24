@@ -57,3 +57,10 @@ JOIN UnifiedIndividual__dlm
     ON SalesOrder__dlm.PartyId__c = UnifiedIndividual__dlm.Id__c
 GROUP BY UnifiedIndividual__dlm.Id__c
 ```
+
+## 3. Bridging the CI to Agentforce Actions
+
+Once the CI is active, the aggregated result is materialized as a highly indexed virtual object (`<CIName>__cio`). Because this object is already pre-calculated, querying it is lightning fast.
+
+However, standard SOQL cannot query `.cio` objects effectively. To expose this data to an Agentforce Sub-Agent, you must build an Apex Action that utilizes the **ConnectApi** to fetch the exact row needed, completely bypassing standard CRM governor limits.
+
