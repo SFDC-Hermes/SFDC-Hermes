@@ -64,3 +64,36 @@ Once the CI is active, the aggregated result is materialized as a highly indexed
 
 However, standard SOQL cannot query `.cio` objects effectively. To expose this data to an Agentforce Sub-Agent, you must build an Apex Action that utilizes the **ConnectApi** to fetch the exact row needed, completely bypassing standard CRM governor limits.
 
+```apex
+public with sharing class CustomerInsightAction {
+
+    @InvocableMethod(label='Get A')
+    public static List<InsightResponse> getCustomerA(List<String> recordIds) {
+        
+        // 1. Construct the Data Cloud Query using ConnectApi
+        ConnectApi.CdpQueryInput queryInput = new ConnectApi.CdpQueryInput();
+        queryInput.sql = 'SELECT Total_Spend__c, Customer_Tier__c FROM Customer_RFM_Insight__cio WHERE CustomerId__c = \'' + recordIds[0] + '\'';
+        
+        // 2. Execute the query against the Data Cloud compute layer
+        ConnectApi.CdpQueryOutput output = ConnectApi.Cdp.queryDataCloud(queryInput);
+        
+        // 3. Parse the dynamic response
+        InsightResponse result = new InsightResponse();
+        if (output.data != null && !output.data.isEmpty()) {
+            Map<String, Object> row = (Map<String, Object>) output.data[0];
+            result.totalSpend = (Decimal) row.get('Total_Spend__c');
+            result.customerTier = (String) row.get('Customer_Tier__c');
+        }
+        
+        // Return a lightweight, structured context to the Sub-Agent's ReAct loop
+        return new List<InsightResponse>{ result };
+    }
+
+    public class InsightResponse {
+        @InvocableVariable public Decimal totalSpend;
+        @InvocableVariable public String customerTier;
+    }
+}
+
+```
+
