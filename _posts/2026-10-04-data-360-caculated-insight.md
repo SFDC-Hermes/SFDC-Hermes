@@ -13,6 +13,8 @@ tags:
   - SQL
 ---
 
+The SOQL Limit Crisis in Autonomous Agents
+
 When transitioning from basic CRM development to AI Agent architecture, the most common point of failure is data volume. 
 
 Imagine a Sub-Agent handling a user request: *"Am I eligible for the VIP discount based on my purchases this year?"* 
@@ -41,7 +43,6 @@ Calculated Insights are defined using standard **ANSI SQL**, not SOQL. This allo
 Below is an enterprise-grade CI SQL definition. It takes millions of raw sales order rows, joins them with the unified individual profile, and outputs a highly compressed analytical metric: Total Spend, Last Purchase Date, and a dynamic VIP Tier.
 
 ```sql
-
 SELECT
     UnifiedIndividual__dlm.Id__c AS CustomerId__c,
     SUM(SalesOrder__dlm.GrandTotalAmount__c) AS Total_Spend__c,
@@ -56,6 +57,7 @@ FROM SalesOrder__dlm
 JOIN UnifiedIndividual__dlm 
     ON SalesOrder__dlm.PartyId__c = UnifiedIndividual__dlm.Id__c
 GROUP BY UnifiedIndividual__dlm.Id__c
+
 ```
 
 ## 3. Bridging the CI to Agentforce Actions
@@ -67,12 +69,12 @@ However, standard SOQL cannot query `.cio` objects effectively. To expose this d
 ```apex
 public with sharing class CustomerInsightAction {
 
-    @InvocableMethod(label='Get A')
-    public static List<InsightResponse> getCustomerA(List<String> recordIds) {
+    @InvocableMethod(label='Get Customer VIP Tier & Spend' description='Retrieves pre-calculated total spend and VIP tier for a given customer.')
+    public static List<InsightResponse> getCustomerTier(List<String> unifiedCustomerIds) {
         
         // 1. Construct the Data Cloud Query using ConnectApi
         ConnectApi.CdpQueryInput queryInput = new ConnectApi.CdpQueryInput();
-        queryInput.sql = 'SELECT Total_Spend__c, Customer_Tier__c FROM Customer_RFM_Insight__cio WHERE CustomerId__c = \'' + recordIds[0] + '\'';
+        queryInput.sql = 'SELECT Total_Spend__c, Customer_Tier__c FROM Customer_RFM_Insight__cio WHERE CustomerId__c = \'' + unifiedCustomerIds[0] + '\'';
         
         // 2. Execute the query against the Data Cloud compute layer
         ConnectApi.CdpQueryOutput output = ConnectApi.Cdp.queryDataCloud(queryInput);
@@ -94,6 +96,12 @@ public with sharing class CustomerInsightAction {
         @InvocableVariable public String customerTier;
     }
 }
+
+```
+
+## 4. Conclusion
+
+Building an intelligent Agentforce architecture requires a Forward Deployed Engineer's mindset: you must anticipate data bottlenecks before they crash your production environment. By pre-aggregating heavy datasets using **Calculated Insights** and bridging them to Sub-Agents via the **ConnectApi**, you provide your AI with instant, grounded context while keeping execution times in the milliseconds and safely avoiding SOQL limits.
 
 ```
 
