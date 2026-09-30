@@ -103,5 +103,4 @@ public with sharing class CustomerInsightAction {
 
 Building an intelligent Agentforce architecture requires a Forward Deployed Engineer's mindset: you must anticipate data bottlenecks before they crash your production environment. By pre-aggregating heavy datasets using **Calculated Insights** and bridging them to Sub-Agents via the **ConnectApi**, you provide your AI with instant, grounded context while keeping execution times in the milliseconds and safely avoiding SOQL limits.
 
-```
 
