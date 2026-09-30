@@ -22,7 +22,7 @@ Vector Databases (like Pinecone, Milvus, and Salesforce's Data Cloud Vector Engi
 
 ### 1.1 Embeddings and High-Dimensional Space
 
-When you ingest a document into Data Cloud, an **Embedding Model** (e.g., OpenAI's `text-embedding-ada-002`) processes the text chunks. It strips away the human language and converts the chunk into an array of floating-point numbers—a **Vector**.
+When you ingest a document into Data Cloud, an **Embedding Model** processes the text chunks. It strips away the human language and converts the chunk into an array of floating-point numbers—a **Vector**.
 Modern embeddings often have 1,536 dimensions. Imagine a graph not with X, Y, and Z axes, but with 1,536 axes. Each dimension represents a micro-feature of semantic meaning (e.g., tone, subject, context).
 * The word "Dog" and "Puppy" will have very similar coordinate values in this 1,536-dimensional space.
 * "Dog" and "Car" will be mapped incredibly far apart.
