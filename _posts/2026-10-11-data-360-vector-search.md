@@ -32,3 +32,15 @@ Modern embeddings often have 1,536 dimensions. Imagine a graph not with X, Y, an
 When a user types a prompt into Agentforce, the prompt is also vectorized into this exact same dimensional space. The Vector DB then performs a search to find the closest document vectors.
 To do this, it measures the angle between the vectors, a metric known as **Cosine Similarity**. If the angle is narrow (closer to 1), the concepts are semantically identical.
 However, running this math against 10 million rows in real-time is too slow. Vector DBs use an algorithm called **HNSW (Hierarchical Navigable Small World)**. It builds a multi-layered graph that allows the engine to "skip" across the vector space, finding the Approximate Nearest Neighbor (ANN) in single-digit milliseconds.
+
+### 1.3 The Fatal Flaw: When Meaning Overrides Precision
+
+Vector Search is a superpower for conceptual queries. If you search for "laptop issues," it will successfully find documents containing "notebook broken" or "MacBook crash" because they cluster together in the vector space.
+**But it is terrible at exact entity matching.**
+To an embedding model, the serial numbers "AX-992-B" and "AX-992-C" mean almost the exact same thing: *a product code*. In the 1,536-dimensional space, their vectors overlap almost perfectly. The Cosine Similarity distance is negligible. Consequently, the RAG retriever blindly pulls the wrong product chunk, feeding bad context to the LLM, which then generates a hallucinated response.
+
+## 2. Lexical Search (BM25) to the Rescue
+
+Before generative AI, search engines relied on **Lexical (Keyword) Search**, primarily powered by algorithms like **BM25**.
+* **The Superpower:** It scores documents based on exact keyword frequency and rarity. If you search for "AX-992-B", it strictly filters for that exact string.
+* **The Fatal Flaw:** It lacks semantic understanding. If you search for "return policy", it will fail to retrieve a document titled "refund guidelines."
