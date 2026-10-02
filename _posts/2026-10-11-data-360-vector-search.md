@@ -68,3 +68,9 @@ When setting up a **Search Index** on an Unstructured Data Model Object (UDMO) i
 
 1. **Chunking Strategy:** Never leave this at default for technical documents. If a chunk randomly splits halfway through a product specifications table, the LLM loses context. Use structural chunking.
 2. **Index Type Selection:** Always opt for **Hybrid Search** when dealing with enterprise data containing part numbers, SKUs, error codes, or specific names. Pure Vector is only acceptable for generic knowledge bases.
+
+## 4. Bridging the Index to Agentforce
+
+Once your Hybrid Search Index is active, you expose it to your Agentforce Sub-Agent using a **Search Index Retriever Action**. 
+
+When Atlas evaluates the ReAct loop and decides it needs external knowledge, it fires this retriever. Because the underlying index is Hybrid, the Observation payload returned to the LLM is mathematically guaranteed to contain both semantically relevant context and exact keyword matches, reducing Agentforce hallucinations to near zero.
