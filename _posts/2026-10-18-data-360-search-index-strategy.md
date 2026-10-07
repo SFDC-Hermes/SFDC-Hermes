@@ -34,3 +34,29 @@ This strategy splits text based on paragraph or sentence levels into fixed, mana
 ### 1.2 Semantic Chunking & HTML Preprocessing
 
 Instead of blindly cutting text by token count, **Semantic Chunking** relies on the document's inherent structure (like HTML headings) to keep logically related information together.
+
+## 2. Selecting the Right Embedding Model
+
+Once chunked, the text must be converted into numerical vectors. In Einstein Studio (Data Cloud), architects must choose the right Embedding Model. Selecting the wrong one will either skyrocket your API costs or fail to understand user queries.
+
+### Option 1: The Multilingual Heavyweight (e.g., `multilingual-e5-large`)
+
+* **Best For:** Global enterprise rollouts.
+* **Characteristics:** E5 (Embeddings from bidirectional Encoder Representations) projects multiple languages into the *same* vector space. A user can ask a question in Korean, and the model will successfully retrieve the relevant chunk from an English manual because the semantic meaning aligns.
+
+### Option 2: The Monolingual Specialist (e.g., `bge-large-en`)
+
+* **Best For:** Single-language environments (e.g., a strictly US-based operation).
+* **Characteristics:** BGE models optimized for English heavily outperform multilingual models in nuanced, domain-specific English queries.
+  
+### Option 3: The High-Dimension BYOM (e.g., OpenAI `text-embedding-ada-002`)
+
+* **Best For:** Integrating with existing external OpenAI infrastructure.
+* **Characteristics:** Connected via external API, this model outputs massive 1,536-dimensional vectors, capturing incredibly nuanced semantic relationships.
+* **Trade-off:** Introduces external network latency and incurs additional API costs outside of standard Salesforce Data Cloud credits.
+  
+### Option 4: The Lightweight / Fast Model (e.g., `all-MiniLM-L6-v2`)
+
+* **Best For:** Low-latency requirements or budget-constrained projects.
+* **Characteristics:** Outputs a smaller dimensional vector (e.g., 384 dimensions). It is incredibly fast to query and consumes less storage.
+* **Trade-off:** Lacks the semantic depth required for highly technical, jargon-heavy enterprise manuals.
