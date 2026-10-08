@@ -60,3 +60,9 @@ Once chunked, the text must be converted into numerical vectors. In Einstein Stu
 * **Best For:** Low-latency requirements or budget-constrained projects.
 * **Characteristics:** Outputs a smaller dimensional vector (e.g., 384 dimensions). It is incredibly fast to query and consumes less storage.
 * **Trade-off:** Lacks the semantic depth required for highly technical, jargon-heavy enterprise manuals.
+
+## 3. Architecting the Final Index
+
+Building the Search Index is the final act of data preparation. A senior architect must look at the source data and make calculated pairings.
+If you are indexing **Rich-Text Knowledge Articles** with complex tables, your optimal configuration is **Semantic Chunking** paired with a robust model like `multilingual-e5-large` to preserve structural meaning. Conversely, if you are indexing **Plain-Text Internal Chat Logs**, you should optimize for speed and cost using **Window-based Chunking** and a lightweight model.
+Agentforce is only as intelligent as the data you feed it. By mastering the parsing and chunking pipeline, you ensure that when the Atlas Engine fires a retrieval action, it receives the exact, pristine context it needs.
