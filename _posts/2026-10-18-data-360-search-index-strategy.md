@@ -25,3 +25,43 @@ RAG is fundamentally a two-phase architecture: **Data Preparation (Ingestion)** 
 > - Treat the index as a measurable system: build a golden question set and evaluate retrieval *before* you tune prompts.
 
 ---
+
+## 0. The Big Picture: Where Quality Is Decided
+
+```
+ INGESTION (once, and on every content change)          RUNTIME (every turn)
+ ┌────────┐  ┌────────┐  ┌────────┐  ┌────────────┐     ┌───────────┐  ┌─────────┐  ┌───────┐
+ │ Source │→ │ Parse/ │→ │ Chunk  │→ │ Embed →    │ ... │ Query     │→ │ Retrieve│→ │ Atlas │
+ │  DMO   │  │ Clean  │  │        │  │ Vector idx │     │ embedding │  │ top-k   │  │ + LLM │
+ └────────┘  └────────┘  └────────┘  └────────────┘     └───────────┘  └─────────┘  └───────┘
+        ▲ decisions in this half are expensive to reverse ▲
+```
+
+Every decision on the left side of that diagram is made once, silently, and then inherited by every conversation. A bad chunk boundary is not a bug you see in a stack trace; it shows up as an agent that is *confidently* slightly wrong. That is why this half of the pipeline deserves architect-level attention.
+
+This guide covers the critical decisions in the Data Cloud UI when building a Search Index: **parsing and preprocessing, chunking strategy, and embedding model selection**, plus the retrieval-side settings that interact with them.
+
+> **Note:** Data Cloud and Agentforce ship three releases a year, and option names and available models change. Treat the specific labels below as illustrative and confirm them against the current release notes and the Search Index reference in Salesforce Help before committing to a design.
+
+---
+
+## 1. Preprocessing: Garbage In, Garbage Vectors
+
+Before any chunking happens, the source must be turned into clean text. For Knowledge Articles and web content stored as rich text in a Data Model Object (DMO), that means dealing with HTML.
+
+Common failure modes:
+
+| Problem | Effect on retrieval |
+|---|---|
+| Navigation, footers, cookie banners in crawled pages | Boilerplate dominates the vector; unrelated queries match every page |
+| Tables flattened into run-on text | Row/column relationships are lost; "Plan A limit is 5 GB" becomes ambiguous |
+| Inline styling and script remnants | Wasted tokens, diluted embeddings |
+| Duplicate or near-duplicate articles (versions, translations) | Top-k filled with redundant chunks, crowding out distinct evidence |
+
+**Architect's checklist before indexing:**
+
+1. Index only the fields that carry meaning (title, body, summary), not every column on the DMO.
+2. Keep the **title and section heading attached to each chunk** (either through semantic chunking or by including them in the indexed text). A chunk that says "Set the value to 30" is useless without knowing *what* is being set.
+3. Filter to published, current-version, correct-channel records at the source. It is much cheaper to exclude archived articles from the index than to explain why the agent quoted a retired policy.
+
+---
