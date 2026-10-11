@@ -65,3 +65,53 @@ Common failure modes:
 3. Filter to published, current-version, correct-channel records at the source. It is much cheaper to exclude archived articles from the index than to explain why the agent quoted a retired policy.
 
 ---
+
+## 2. The Art of Chunking: Semantic vs. Window-Based
+
+When you ingest unstructured data into a DMO, you cannot hand the entire document to the LLM. It must be split into smaller units, each of which is embedded as its own vector. The chunk is the **atomic unit of retrieval**: the agent can only find and quote what a single chunk contains.
+
+Chunking is a trade-off between two forces:
+
+- **Precision:** smaller chunks produce vectors about one specific idea, so they match specific queries sharply.
+- **Context:** larger chunks keep the surrounding explanation intact, so the LLM has enough to answer correctly.
+
+Data Cloud offers two primary families of strategies.
+
+### 2.1 Window-Based Chunking (Fixed Size)
+
+This strategy splits text at paragraph or sentence boundaries into sections of a target size, with a configurable overlap between neighbors.
+
+| Chunk size | Strengths | Weaknesses | Best for |
+|---|---|---|---|
+| **Small** (e.g., ~256 tokens) | Highly precise; one vector ≈ one thought | Lacks surrounding context; answers may be incomplete | Dense FAQs, glossaries, short plain-text records |
+| **Medium** (e.g., ~512 tokens) | Balanced; usually a sensible default | Needs validation against real queries | General policy and how-to content |
+| **Large** (e.g., 1,024 tokens; needs a long-context model such as SFR V2) | Preserves narrative context (e.g., a warning *and* its instruction) | Semantic meaning dilutes when multiple topics share a chunk; more tokens per retrieved result | Long-form narrative, procedures with dependencies |
+
+**On overlap.** Never set overlap to 0. If a critical sentence is split down the middle, neither half carries its full meaning, and the information becomes effectively unretrievable. A common starting point is roughly **10-20% of the chunk size**, then adjust based on evaluation. Be aware of the cost side: overlap increases total chunk count, storage, and the chance that near-duplicate chunks both appear in the top-k.
+
+**A subtle point on units.** Chunk size is a token (or character) budget, not a "topic" budget. Window-based chunking is structure-blind: it will happily put the end of one section and the start of the next into the same vector. That is acceptable for flat text and costly for structured documents, which is precisely where semantic chunking earns its place.
+
+### 2.2 Semantic Chunking and HTML Preprocessing
+
+Instead of cutting by size alone, **semantic chunking** uses the document's inherent structure (such as HTML headings, sections, and lists) so that logically related information stays together. A "Prerequisites" section stays one unit; a troubleshooting table does not get cut between header and rows.
+
+Why it matters for enterprise content:
+
+- **Coherent retrieval units.** Each chunk corresponds to something a human author considered a unit of meaning.
+- **Better citations.** When the agent grounds an answer, the cited passage maps to a recognizable section, which makes responses easier to verify.
+- **Variable chunk sizes.** Chunks follow the content, so a one-line note and a long procedure are treated appropriately rather than being forced to the same length.
+
+The trade-off is dependence on source quality. If authors use bold text instead of real headings, or paste entire articles as a single `<div>`, there is no structure to exploit and semantic chunking degrades toward arbitrary splitting. **Auditing your content's HTML hygiene is part of the chunking decision.**
+
+### 2.3 Decision Guide
+
+| Source characteristic | Recommended approach |
+|---|---|
+| Rich-text Knowledge with headings, tables, lists | Semantic chunking |
+| Long documents with weak or no structure (PDF text dumps, transcripts) | Window-based, medium-large size, overlap 10-20% |
+| Short, self-contained records (FAQ pairs, product snippets) | Window-based, small size, minimal overlap needed because records are already atomic |
+| Mixed corpus | Separate indexes per content type, rather than a single compromise configuration |
+
+That last row is underrated. One index per content type costs a little more to manage but lets each corpus use the configuration it actually deserves.
+
+---
