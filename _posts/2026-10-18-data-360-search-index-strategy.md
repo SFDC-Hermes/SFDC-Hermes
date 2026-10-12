@@ -12,6 +12,8 @@ tags:
   - Embeddings
   - Chunking
   - Architecture
+toc: true
+toc_sticky: true
 ---
 
 When building a Retrieval-Augmented Generation (RAG) architecture in Agentforce, developers often obsess over the runtime: how the Atlas Reasoning Engine formulates its prompt, which topics and actions get selected, how instructions are phrased. That focus is understandable, but it overlooks where most RAG quality is actually decided.
@@ -115,3 +117,40 @@ The trade-off is dependence on source quality. If authors use bold text instead 
 That last row is underrated. One index per content type costs a little more to manage but lets each corpus use the configuration it actually deserves.
 
 ---
+
+## 3. Selecting the Right Embedding Model
+
+Once chunked, text is converted into numerical vectors. In the Data Cloud Search Index setup, you choose the embedding model, and that choice affects retrieval relevance, the maximum chunk size you can safely use, latency, and cost.
+
+Two rules apply to every option below:
+
+1. **Query and document embeddings must come from the same model.** Vectors from different models live in different spaces and are not comparable.
+2. **Changing the model means re-embedding the entire corpus.** Decide deliberately, and prototype on a representative sample first.
+
+The catalog is small and focused. At the time of writing, there are four options: **SFR V2**, **E5-large-v2**, **Multilingual-E5-large**, and **CLIP**.
+
+### Option 1: The Long-Context Flagship (SFR V2 / `SFR-v2-small`, Salesforce Research)
+
+- **Best for:** Content-rich documents where preserving long passages matters, and teams that want the strongest general-purpose relevance in the catalog.
+- **Characteristics:** Developed by Salesforce Research. It offers a high degree of embedding resolution and better semantic relevance, and it supports inputs of up to roughly **8,000 tokens**, far beyond the E5 family.
+- **Why the context window matters:** A larger input limit lets you use large chunks, or semantic chunks that follow long sections, without silent truncation. It is the natural pairing for structured Knowledge Articles whose sections are long.
+- **Trade-off:** Larger chunks mean more tokens per retrieved result and more topic dilution if the content is not well structured. A big context window is permission to use big chunks, not a reason to.
+
+### Option 2: The English Workhorse (`E5-large-v2`)
+
+- **Best for:** Single-language (English) environments with moderate-length content.
+- **Characteristics:** A text embedding model supporting up to **512 tokens**. Solid, well-understood retrieval quality for English queries.
+- **Trade-off:** The 512-token ceiling is a hard design constraint. Any chunk longer than that is truncated, and the tail of the chunk never makes it into the vector.
+
+### Option 3: The Multilingual Model (`Multilingual-E5-large`)
+
+- **Best for:** Global enterprise rollouts.
+- **Characteristics:** E5 (EmbEddings from bidirEctional Encoder rEpresentations) maps multiple languages into the *same* vector space, also with a **512-token** limit. A user can ask a question in Korean and retrieve the relevant chunk from an English manual, because the semantic meaning aligns across languages.
+- **Practical tip:** E5-family models are trained with instruction-style prefixes (`query:` and `passage:`). Confirm how the platform handles this so queries and documents are embedded consistently.
+- **Trade-off:** The same 512-token ceiling as E5-large-v2. If your content is English-only, the multilingual capacity is capability you are not using.
+
+### Option 4: The Multimodal Model (CLIP)
+
+- **Best for:** Corpora where meaning lives in images, charts, diagrams, or scanned documents.
+- **Characteristics:** CLIP embeddings are used for image content in the multimodal search pipeline. Combined with OCR and LLM-generated captions (GPT-4o captioning), images, charts, and scanned documents become searchable vector content rather than invisible files.
+- **Trade-off:** Image understanding adds processing steps (OCR, captioning), so ingestion is heavier and retrieval quality depends on the quality of those intermediate outputs. Test with your real documents, not clean samples.
