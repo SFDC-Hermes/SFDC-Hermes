@@ -154,3 +154,27 @@ The catalog is small and focused. At the time of writing, there are four options
 - **Best for:** Corpora where meaning lives in images, charts, diagrams, or scanned documents.
 - **Characteristics:** CLIP embeddings are used for image content in the multimodal search pipeline. Combined with OCR and LLM-generated captions (GPT-4o captioning), images, charts, and scanned documents become searchable vector content rather than invisible files.
 - **Trade-off:** Image understanding adds processing steps (OCR, captioning), so ingestion is heavier and retrieval quality depends on the quality of those intermediate outputs. Test with your real documents, not clean samples.
+
+### Comparison at a Glance
+
+| Model | Max input | Languages | Best fit | Watch out for |
+|---|---|---|---|---|
+| **SFR V2** (`SFR-v2-small`) | ~8,000 tokens | See model card | Long, structured documents; highest relevance goal | Oversized chunks diluting meaning |
+| **E5-large-v2** | 512 tokens | English | English-only knowledge, moderate chunk sizes | Truncation above 512 tokens |
+| **Multilingual-E5-large** | 512 tokens | Multilingual | Global, cross-lingual retrieval | Truncation above 512 tokens |
+| **CLIP** | n/a (image) | n/a | Images, charts, scanned documents | Heavier ingestion; OCR/caption quality |
+
+> Specifications come from Salesforce Help's Search Index reference and the Data 360 release highlights, and they change between releases. Verify against the current documentation before you commit to a design.
+
+### Chunk Size and Model Must Be Chosen Together
+
+This is the most important consequence of the table above. **A chunk larger than the model's input limit is truncated, and the vector represents only the part the model actually saw.** No dashboard flags it; retrieval just gets quietly worse.
+
+| Model | Practical chunk-size guidance |
+|---|---|
+| E5-large-v2 / Multilingual-E5-large | Keep chunks comfortably **under 512 tokens**, including any title and heading text attached to the chunk. Large 1,024-token chunks are not an option here. |
+| SFR V2 | Large chunks and long semantic sections are viable, but size them by *topic coherence*, not by the maximum. |
+
+If you use semantic chunking with an E5 model, check how long your longest sections are. A single 900-token "Troubleshooting" section will be cut off at 512.
+
+---
