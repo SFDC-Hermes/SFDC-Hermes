@@ -178,3 +178,41 @@ This is the most important consequence of the table above. **A chunk larger than
 If you use semantic chunking with an E5 model, check how long your longest sections are. A single 900-token "Troubleshooting" section will be cut off at 512.
 
 ---
+
+## 4. Beyond the Basics: Retrieval-Side Settings That Interact With Your Index
+
+A great index can still underperform if retrieval is naive. Three levers are worth knowing about when designing the full pipeline. Availability and naming vary by release, so check what your org exposes.
+
+- **Hybrid search (vector + keyword).** Pure vector search is excellent at meaning and weak at exact tokens such as product SKUs, error codes, and policy numbers. Combining semantic and keyword matching typically improves recall on identifier-heavy queries.
+- **Metadata filtering (prefilters).** Narrow the candidate set *before* similarity ranking: by language, product line, region, audience, or article status. This improves precision, reduces cost, and is often the cleanest way to enforce "customers must not see internal-only content."
+- **Top-k and reranking.** Retrieving more candidates and then reranking them with a stronger relevance model often beats simply increasing k. More retrieved chunks also means more prompt tokens and more room for the LLM to be distracted.
+
+---
+
+## 5. Architecting the Final Index
+
+Building the Search Index is the final act of data preparation. A senior architect looks at the source data and makes calculated pairings rather than accepting defaults.
+
+**Scenario A: Rich-text Knowledge Articles with complex tables, global audience**
+Semantic chunking on cleaned HTML, paired with `Multilingual-E5-large` and language and article-status prefilters. Cross-lingual retrieval works, but sections must stay under 512 tokens, so audit your longest sections first. If many sections run longer, SFR V2 gives you room to keep tables and their context together.
+
+**Scenario B: Plain-text internal chat logs, high volume, speed-sensitive**
+Window-based chunking with a modest chunk size (well under 512 tokens) and light overlap, paired with `E5-large-v2` if the logs are English. There is no structure to exploit, volume is high, and the cost of an occasional imperfect match is low.
+
+**Scenario C: Short FAQ pairs in a single language**
+Window-based chunking sized so each Q&A pair stays in one chunk, with `E5-large-v2` for English content. Each pair is short, so the 512-token limit is not a concern.
+
+**Scenario D: Manuals with diagrams, charts, or scanned pages**
+Enable the multimodal path with CLIP so that images are indexed through OCR and captioning. Test retrieval on a handful of real scanned pages before rolling it out.
+
+---
+
+## 6. Measure It: Treat the Index as a System Under Test
+
+The most common reason RAG projects stall is that nobody can say whether a change made things better. Replace opinions with a small evaluation harness:
+
+1. **Build a golden set** of 30-100 realistic questions, each mapped to the source article or section that should answer it. Include multilingual, ambiguous, and identifier-style queries.
+2. **Measure retrieval first, generation second.** For each question, check whether the correct chunk appears in the top-k (recall@k) and how high it ranks. If retrieval is wrong, fixing the prompt is wasted effort.
+3. **Change one variable at a time:** chunk size, overlap, model, hybrid on/off. Keep a simple log of configuration versus result.
+4. **Inspect failures by hand.** Read the actual retrieved chunks. Most problems become obvious within minutes: a chunk cut mid-table, a missing heading, boilerplate winning the ranking.
+5. **Re-run after content changes.** Index quality drifts as source content evolves.
