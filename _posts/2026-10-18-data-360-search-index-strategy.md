@@ -216,3 +216,20 @@ The most common reason RAG projects stall is that nobody can say whether a chang
 3. **Change one variable at a time:** chunk size, overlap, model, hybrid on/off. Keep a simple log of configuration versus result.
 4. **Inspect failures by hand.** Read the actual retrieved chunks. Most problems become obvious within minutes: a chunk cut mid-table, a missing heading, boilerplate winning the ranking.
 5. **Re-run after content changes.** Index quality drifts as source content evolves.
+
+### Common Pitfalls
+
+- Defaulting to one giant index for every content type.
+- Setting overlap to zero, or to such a large value that duplicates flood the results.
+- Letting chunks exceed the model's input limit (512 tokens for the E5 models), which silently truncates content.
+- Indexing archived or draft content.
+- Tuning prompts to compensate for retrieval failures.
+- Switching embedding models without a full re-index, or comparing vectors across models.
+
+---
+
+## Conclusion
+
+Agentforce is only as intelligent as the data you feed it. The Atlas Reasoning Engine can only reason over what retrieval hands it, and retrieval can only return what the index preserved. By mastering the parsing, chunking, and embedding pipeline, and by validating it with a real evaluation set, you ensure that when Atlas fires a retrieval action, it receives exactly the pristine, well-scoped context it needs.
+
+Get the foundation right once, and every prompt, topic, and action built on top of it gets better for free.
