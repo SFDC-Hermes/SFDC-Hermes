@@ -22,3 +22,31 @@ The retriever defines *what* is searched, *which fields* come back, *how many* r
 > - There are two main routes to the agent: an **Agentforce Data Library** configured with a custom retriever, and a **Prompt Builder template** that embeds a retriever as a resource.
 > - Validate retrieval at the **prompt template level first**, then wire it into the agent. Debugging inside a full agent conversation hides the cause.
 > - Grounding is a prompt contract, not a feature flag: constrain the model to the retrieved context and give it an explicit "I don't know" path.
+
+## 1. Where the Retriever Sits
+
+```
+ USER QUESTION
+      │
+      ▼
+ ┌──────────────┐   topic / action   ┌───────────────────────────┐
+ │ Atlas Engine │ ─────────────────► │ Knowledge action or       │
+ │ (reasoning)  │                    │ Prompt template           │
+ └──────────────┘                    └─────────────┬─────────────┘
+                                                   │ query text
+                                                   ▼
+                                     ┌───────────────────────────┐
+                                     │ RETRIEVER                 │
+                                     │  source · filters ·       │
+                                     │  fields · result count    │
+                                     └─────────────┬─────────────┘
+                                                   │ top-k chunks (+ metadata)
+                                                   ▼
+                                     ┌───────────────────────────┐
+                                     │ Prompt = instructions     │
+                                     │        + question         │
+                                     │        + retrieved chunks │
+                                     └─────────────┬─────────────┘
+                                                   ▼
+                                           LLM → grounded answer
+```
