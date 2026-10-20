@@ -14,7 +14,7 @@ tags:
   - PromptBuilder
 ---
 
-In the [previous post]({% post_url 2026-10-18-data-360-search-index-strategy %}) we focused on the ingestion half of RAG: preprocessing, chunking, and embedding models. A well-built Search Index is necessary, but it is not sufficient. Between the index and the agent's answer sits a component that is configured far less deliberately than it deserves: the **retriever**.
+we focused on the ingestion half of RAG: preprocessing, chunking, and embedding models. A well-built Search Index is necessary, but it is not sufficient. Between the index and the agent's answer sits a component that is configured far less deliberately than it deserves: the **retriever**.
 
 The retriever defines *what* is searched, *which fields* come back, *how many* results are returned, and *what the LLM is actually allowed to see*. Two teams can share an identical index and get very different agents purely because of retriever and prompt-level decisions.
 
