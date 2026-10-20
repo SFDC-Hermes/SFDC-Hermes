@@ -79,3 +79,18 @@ Two points deserve emphasis.
 **Filters trade recall for precision.** A filter that is correct 95% of the time silently removes the right answer for the other 5%. Reserve filters for hard boundaries such as language or audience, and keep soft preferences in the index design.
 
 ---
+
+## 3. Building a Retriever: The Short Version
+
+The exact menu path depends on your release. Some guides place retrievers under **Einstein Studio → Retrievers**, while newer documentation places them under **Agentforce Studio → Data → Retrievers**. The flow is the same:
+
+1. **New Retriever** and choose **Individual Retriever**.
+2. Select the data source (Data Cloud), then the **Data Space**, **Source Object**, and **Search Index**.
+3. Set filters (start with all documents).
+4. Choose **Fields to Return**: at minimum the chunk field. Add title, URL, source record ID, or data source as needed.
+5. Enable **Citation Settings** if answers must show their sources.
+6. **Save**, then **Activate**. An inactive retriever cannot be used.
+
+> **Note:** Labels and menu locations change between releases. Confirm against the current Salesforce Help before following this literally.
+
+---
