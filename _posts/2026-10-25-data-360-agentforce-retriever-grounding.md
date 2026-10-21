@@ -94,3 +94,32 @@ The exact menu path depends on your release. Some guides place retrievers under 
 > **Note:** Labels and menu locations change between releases. Confirm against the current Salesforce Help before following this literally.
 
 ---
+
+## 4. Two Routes From Retriever to Agent
+
+### Route A: Agentforce Data Library with a Custom Retriever
+
+In the agent builder, you create a data library, set its data type to **Custom Retriever**, and select your retriever. The agent then uses it through its knowledge-answering action (the standard **Answer Questions with Knowledge** action).
+
+This route is the fastest to a working agent. It is also the least visible: the prompt that combines instructions, question, and chunks lives in a template you did not write unless you override it.
+
+### Route B: Retriever as a Prompt Builder Resource
+
+In **Prompt Builder**, a retriever is inserted as a **resource** inside the template, typically in a dedicated knowledge section. You configure:
+
+- **Search text:** where the query comes from, for example a free-text input.
+- **Output fields:** which retriever fields are rendered into the prompt. For most RAG prompts, this is the chunk field only.
+
+This route gives you full control over the prompt, and it is where you can test retrieval in isolation by previewing the template with a sample query and retriever.
+
+### Which one should you use?
+
+| Situation | Recommended route |
+|---|---|
+| Standard knowledge Q&A, quick start | Route A with the default behavior, then validate quality |
+| FAQ-style content, strict answer format, or the default answers feel off | Route B: own the template, then connect it to the agent |
+| Need to experiment with models, languages, or instructions | Route B: preview in Prompt Builder before touching the agent |
+
+The practical lesson from teams that have done this at scale: **the default knowledge template is a starting point, not a final design.** Overriding the default retriever and template is normal for domain-specific content.
+
+---
