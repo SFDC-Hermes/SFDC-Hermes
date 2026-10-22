@@ -14,7 +14,7 @@ tags:
   - PromptBuilder
 ---
 
-we focused on the ingestion half of RAG: preprocessing, chunking, and embedding models. A well-built Search Index is necessary, but it is not sufficient. Between the index and the agent's answer sits a component that is configured far less deliberately than it deserves: the **retriever**.
+In the [previous post]({% post_url 2026-10-18-data-360-search-index-strategy %}) we focused on the ingestion half of RAG: preprocessing, chunking, and embedding models. A well-built Search Index is necessary, but it is not sufficient. Between the index and the agent's answer sits a component that is configured far less deliberately than it deserves: the **retriever**.
 
 The retriever defines *what* is searched, *which fields* come back, *how many* results are returned, and *what the LLM is actually allowed to see*. Two teams can share an identical index and get very different agents purely because of retriever and prompt-level decisions.
 
@@ -123,3 +123,7 @@ This route gives you full control over the prompt, and it is where you can test 
 The practical lesson from teams that have done this at scale: **the default knowledge template is a starting point, not a final design.** Overriding the default retriever and template is normal for domain-specific content.
 
 ---
+
+## 5. Grounding Is a Prompt Contract
+
+A retriever supplies context. **Grounding** is the instruction that forces the model to stay inside it. Without that instruction, the LLM blends retrieved text with its general knowledge, and the answer looks authoritative either way.
