@@ -155,3 +155,15 @@ Why each part matters:
 - **Citation instruction** works only if the retriever returns title or URL fields and citation settings are enabled.
 
 ---
+
+## 6. Validate in Layers
+
+Debugging a wrong answer inside a live agent conversation is slow because five things can be wrong at once: topic selection, action selection, retrieval, prompt, and model. Isolate them in this order:
+
+1. **Retriever level.** Does the correct chunk appear in the results for your golden questions? Inspect the raw returned chunks.
+2. **Prompt template level.** Preview the template in Prompt Builder with the same questions. Is the answer faithful to the chunks? Does it refuse when it should?
+3. **Agent level.** Only now test through the agent: does it pick the right topic and action, and pass the user's question through correctly?
+
+Reuse the golden question set from the previous post. The same 30-100 questions now test the whole chain, and a failure at layer 1 is never fixed by editing layer 2.
+
+---
