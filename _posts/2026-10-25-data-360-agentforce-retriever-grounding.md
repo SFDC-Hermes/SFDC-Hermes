@@ -167,3 +167,57 @@ Debugging a wrong answer inside a live agent conversation is slow because five t
 Reuse the golden question set from the previous post. The same 30-100 questions now test the whole chain, and a failure at layer 1 is never fixed by editing layer 2.
 
 ---
+
+## 7. Troubleshooting Guide
+
+| Symptom | Likely cause | First thing to try |
+|---|---|---|
+| Answer is generic or ignores your content | Retriever returns nothing, or the template is not using the retriever resource | Preview the template with a known question and check the knowledge section is populated |
+| Correct article exists but is never retrieved | Chunking or embedding mismatch, or an overly strict filter | Inspect returned chunks; remove filters temporarily; revisit chunk size vs. model limit |
+| Answers mix your content with outside facts | No grounding instruction | Add "use only KNOWLEDGE" and an explicit fallback |
+| Right facts, wrong or missing citations | Source fields not returned or citations disabled | Add title/URL/source record to fields to return; enable citation settings |
+| Responses are slow or expensive | Too many results or too many returned fields | Reduce number of results; return only the chunk field |
+| Agent answers FAQ questions poorly with the default setup | The default knowledge template and retriever are too generic | Build a custom retriever and template, then connect through a custom-retriever data library |
+| Works in Prompt Builder, fails in the agent | Wiring problem: wrong retriever selected, inactive retriever, or topic/action not routing to the knowledge action | Verify the data library points to the activated retriever; test topic routing separately |
+
+---
+
+## 7. Troubleshooting Guide
+
+| Symptom | Likely cause | First thing to try |
+|---|---|---|
+| Answer is generic or ignores your content | Retriever returns nothing, or the template is not using the retriever resource | Preview the template with a known question and check the knowledge section is populated |
+| Correct article exists but is never retrieved | Chunking or embedding mismatch, or an overly strict filter | Inspect returned chunks; remove filters temporarily; revisit chunk size vs. model limit |
+| Answers mix your content with outside facts | No grounding instruction | Add "use only KNOWLEDGE" and an explicit fallback |
+| Right facts, wrong or missing citations | Source fields not returned or citations disabled | Add title/URL/source record to fields to return; enable citation settings |
+| Responses are slow or expensive | Too many results or too many returned fields | Reduce number of results; return only the chunk field |
+| Agent answers FAQ questions poorly with the default setup | The default knowledge template and retriever are too generic | Build a custom retriever and template, then connect through a custom-retriever data library |
+| Works in Prompt Builder, fails in the agent | Wiring problem: wrong retriever selected, inactive retriever, or topic/action not routing to the knowledge action | Verify the data library points to the activated retriever; test topic routing separately |
+
+---
+
+## 8. Production Checklist
+
+- [ ] Retriever is **activated** and the agent's data library points to the right one.
+- [ ] **Fields to return** are limited to what the model needs plus audit fields.
+- [ ] Filters are minimal and each one has a documented reason.
+- [ ] Number of results is tuned against the golden set, not left at the default by habit.
+- [ ] The prompt contains a **grounding constraint** and a **fallback instruction**.
+- [ ] Citations are enabled where users must verify answers.
+- [ ] Retrieval, prompt, and agent behavior were each validated **separately**.
+- [ ] Content-type-specific indexes have their own retrievers.
+
+---
+
+## Conclusion
+
+The index decides what *can* be found. The retriever decides what *is* returned. The prompt decides what the model *does* with it. Treat those as three separate design layers, validate them separately, and most "the agent hallucinated" tickets turn out to be retrieval or prompt bugs that were visible all along.
+
+In the next post, we move one layer up and look at **Prompt Builder and prompt template design**: variables, data resources, template types, and how to structure prompts that stay reliable as your content and models change.
+
+---
+
+### References
+
+- Salesforce Developers: [Create Search Index and Retriever](https://developer.salesforce.com/docs/ai/ground-agentforce-on-website/guide/aes-create-search-index-and-retriever.html)
+- Salesforce Ben: [Connecting Agentforce to Data Cloud for Grounding with RAG](https://www.salesforceben.com/connecting-agentforce-to-data-cloud-for-grounding-with-rag/)
