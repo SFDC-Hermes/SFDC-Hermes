@@ -29,17 +29,17 @@ In Agentforce, the **prompt template** is the unit where business intent, enterp
 ## 1. Anatomy of a Prompt Template
 
 ```
- ┌───────────────────────── PROMPT TEMPLATE ─────────────────────────┐
- │                                                                   │
- │  INPUTS            RESOURCES (grounding)        INSTRUCTIONS      │
- │  ───────           ─────────────────────        ────────────      │
- │  record(s)   ───►  merge fields / related  ┐    role              │
- │  free text         Flow output             ├──► task              │
- │                    Apex output             │    constraints       │
+ ┌───────────────────────── PROMPT TEMPLATE ──────────────────────────┐
+ │                                                                    │
+ │  INPUTS            RESOURCES (grounding)        INSTRUCTIONS       │
+ │  ───────           ─────────────────────        ────────────       │
+ │  record(s)   ───►  merge fields / related  ┐    role               │
+ │  free text         Flow output             ├──► task               │
+ │                    Apex output             │    constraints        │ 
  │                    retriever results       ┘    output format      │
- │                                                                   │
- │  MODEL + VERSION        ──►  Einstein Trust Layer  ──►  LLM       │
- └───────────────────────────────────────────────────────────────────┘
+ │                                                                    │
+ │  MODEL + VERSION        ──►  Einstein Trust Layer  ──►  LLM        │
+ └────────────────────────────────────────────────────────────────────┘
 ```
 
 | Component | Design question |
