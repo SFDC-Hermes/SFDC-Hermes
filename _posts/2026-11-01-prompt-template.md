@@ -25,3 +25,29 @@ In Agentforce, the **prompt template** is the unit where business intent, enterp
 > - Test with edge cases (null fields, long text, other languages), compare versions, and only then expose the template to an agent.
 
 ---
+
+## 1. Anatomy of a Prompt Template
+
+```
+ ┌───────────────────────── PROMPT TEMPLATE ─────────────────────────┐
+ │                                                                   │
+ │  INPUTS            RESOURCES (grounding)        INSTRUCTIONS      │
+ │  ───────           ─────────────────────        ────────────      │
+ │  record(s)   ───►  merge fields / related  ┐    role              │
+ │  free text         Flow output             ├──► task              │
+ │                    Apex output             │    constraints       │
+ │                    retriever results       ┘    output format      │
+ │                                                                   │
+ │  MODEL + VERSION        ──►  Einstein Trust Layer  ──►  LLM       │
+ └───────────────────────────────────────────────────────────────────┘
+```
+
+| Component | Design question |
+|---|---|
+| **Inputs** | What does the caller pass in: one record, several records, or free text? |
+| **Resources** | Which data does the model need that the inputs alone do not contain? |
+| **Instructions** | What is the role, task, boundary, and output shape? |
+| **Model** | Which model fits the task's quality, speed, and language needs? |
+| **Version** | What changed, and can you roll back? |
+
+---
