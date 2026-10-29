@@ -51,3 +51,24 @@ In Agentforce, the **prompt template** is the unit where business intent, enterp
 | **Version** | What changed, and can you roll back? |
 
 ---
+
+## 2. Choose the Template Type First
+
+The type is chosen at creation, and it decides which inputs you can bind and where the template can be invoked. Choosing wrongly means rebuilding the template.
+
+| Type | Purpose | Where it is used |
+|---|---|---|
+| **Sales Email** | Draft personalized emails for a contact or lead | Einstein Sales Emails |
+| **Field Generation** | Populate a field with an LLM-generated summary or description | Lightning record pages |
+| **Flex** | Generate output from a variable number of inputs across different object types | An invocable action anywhere on the platform, the Connect REST API, or Connect in Apex |
+
+Other types exist for specific features (for example Record Summary, Record Prioritization, and Service Email Assistant), but these three cover most custom work.
+
+**Flex is usually the right default for custom agent actions**, because it is not tied to one object or one UI surface. Two Flex design facts matter early:
+
+- A Flex template accepts **up to five inputs**, of type **Object**, **Free Text**, or **Data Model Object**.
+- **Inputs cannot be changed after configuration.** Include at least one **Free Text** input from the start, so you can pass extra context later without rebuilding the template.
+
+> **Note:** Type names and supported entry points change between releases. Confirm what your org supports in Salesforce Help ("Prompt Builder").
+
+---
