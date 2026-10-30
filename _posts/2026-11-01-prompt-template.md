@@ -72,3 +72,20 @@ Other types exist for specific features (for example Record Summary, Record Prio
 > **Note:** Type names and supported entry points change between releases. Confirm what your org supports in Salesforce Help ("Prompt Builder").
 
 ---
+
+## 3. Resources: Choosing How to Ground
+
+Grounding means supplying the data the model must rely on. Prompt Builder lets you reference **merge fields (record fields and related lists), Flow, and Apex**, and it also supports Data 360 sources such as DMOs, data graphs, and Knowledge or retrievers (individual, ensemble, and web), as well as file inputs. The choice of provider is an architectural one.
+
+| Provider | Best for | Trade-off |
+|---|---|---|
+| **Merge fields and related lists** | Straightforward record data such as account name, case status, or recent activities | Simple and declarative, but limited to what the bound records expose |
+| **Flow** | Computed context, branching logic, data from several sources, external callouts | Low-code and admin-friendly, but complex logic becomes hard to maintain |
+| **Apex** | Data from SOQL or external APIs, programmatic filtering, well-formatted JSON | Most control and most testable, but needs developers |
+| **Retriever (Data 360)** | Unstructured knowledge such as articles, manuals, FAQs | Depends on index and retriever quality |
+
+A practical rule: **start with merge fields, escalate to Flow when you need logic, escalate to Apex when you need control.** Every escalation adds maintenance cost, so pay it only when the simpler provider cannot do the job.
+
+Prompt Builder also has documented limits on how many resources a template can use. Treat them as a design constraint and check the current numbers in "Prompt Builder Limits" in Salesforce Help.
+
+---
