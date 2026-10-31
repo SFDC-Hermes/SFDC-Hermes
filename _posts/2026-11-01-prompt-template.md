@@ -89,3 +89,59 @@ A practical rule: **start with merge fields, escalate to Flow when you need logi
 Prompt Builder also has documented limits on how many resources a template can use. Treat them as a design constraint and check the current numbers in "Prompt Builder Limits" in Salesforce Help.
 
 ---
+
+## 4. Grounding With Flow and Apex: Design Principles
+
+Flow and Apex resources share the same idea: **the template passes its inputs to your logic, and your logic returns text that becomes part of the prompt.** The template does not care how that text was produced. That makes the resource a contract, and contracts deserve deliberate design.
+
+### 4.1 How the Contract Works
+
+- **Flow** uses a dedicated prompt-flow type that receives the template's inputs. The flow gathers or computes data and appends it to the prompt, which lets admins build grounding logic without code.
+- **Apex** uses an invocable method. Its inputs mirror the template's inputs, and **each input name must match the template input's API name exactly**. The method returns a single text value that Prompt Builder inserts into the prompt.
+
+One historical note matters if you read older tutorials: Apex resources used to bind to Flex templates through a dedicated capability type. **That capability type is now retired**, so examples that still rely on it need to be updated.
+
+### 4.2 Principles for Resource Output
+
+Whatever tool produces the text, the same principles decide whether the model can use it well.
+
+| Principle | Why it matters |
+|---|---|
+| **Bound the output** | Cap the number of records and the length of long text fields. Unbounded dynamic text is the most common cause of slow, expensive, and unfocused responses. |
+| **Return an explicit empty state** | "No open cases were found" lets the model say so. Silence invites the model to improvise. |
+| **Select, don't dump** | Return only the fields the task needs, not whole records. Every extra field is cost and distraction. |
+| **Use a compact, consistent format** | One line per item, in a fixed order, is easier for the model to parse than a pretty-printed record dump. |
+| **Respect data access** | Grounding text should contain only what the running user is allowed to see. Make the security context explicit in your logic rather than assuming it. |
+
+### 4.3 Operational Cautions
+
+- **Treat resource inputs as a public contract.** Changing the inputs of an Apex class that a template uses breaks the template, and you cannot save new versions until it is fixed.
+- **Plan for debugging.** Logic hidden inside a resource is invisible in the final prompt unless you inspect it. Test the resource output on its own before judging the model's answer.
+
+---
+
+## 5. Writing the Instructions
+
+Instructions are the part developers spend the least structured effort on, and where most inconsistency comes from. A reliable pattern has five blocks:
+
+```text
+ROLE
+You are a support operations assistant for <company>.
+
+TASK
+Write a briefing for the agent who is about to contact this customer.
+
+CONSTRAINTS
+- Use only the information in the CONTEXT section.
+- If information is missing, write "Not available" for that item.
+- Do not speculate about causes or promise outcomes.
+
+OUTPUT FORMAT
+1. One-sentence situation summary
+2. Up to three open issues, ordered by priority
+3. One recommended next step
+
+CONTEXT
+Account: <account merge field>
+<Flow or Apex resource output>
+```
