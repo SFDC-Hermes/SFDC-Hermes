@@ -145,3 +145,31 @@ CONTEXT
 Account: <account merge field>
 <Flow or Apex resource output>
 ```
+
+Principles that hold up in practice:
+
+| Principle | Why |
+|---|---|
+| **Delimit sections with clear labels** | The model can tell instructions from data, which also reduces the risk of retrieved text being read as instructions. |
+| **State constraints positively and specifically** | "Use only the CONTEXT section" is clearer than "don't hallucinate." |
+| **Define the output shape** | A fixed structure makes answers consistent and downstream parsing possible. |
+| **Give an explicit fallback** | "Not available" is better than a fabricated value. |
+| **Keep context lean** | Every extra field is cost and distraction; supply what the task needs. |
+| **One template, one job** | A template that tries to summarize, classify, and draft produces mediocre results at all three. |
+
+---
+
+## 6. From Template to Agent
+
+A template becomes useful to an agent when it is exposed as an **action**. Prompt templates are one of the custom action types an agent can use. The agent decides *when* to call the action based on the topic instructions and the action's own instruction text, and the caller supplies the inputs.
+
+Two consequences for design:
+
+- **The action's name and instruction are routing signals.** A vague label such as "Generate Text" makes the planner guess. A specific one such as "Prepare customer contact briefing from open cases" makes the choice clear.
+- **Keep inputs minimal and unambiguous.** Each input is something the agent must extract from the conversation or context correctly. Fewer inputs mean fewer chances for a wrong value, which is another reason to plan a single Free Text input rather than many fragile ones.
+
+> **Note:** The exact setup screens for creating and assigning agent actions have been renamed across releases. Follow the current Salesforce Help for your org.
+
+Topic and instruction design is the subject of an upcoming post. For now, the principle is that the template defines *what the model does with data*, while the topic defines *when the agent chooses to do it*.
+
+---
