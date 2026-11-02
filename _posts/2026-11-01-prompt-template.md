@@ -173,3 +173,22 @@ Two consequences for design:
 Topic and instruction design is the subject of an upcoming post. For now, the principle is that the template defines *what the model does with data*, while the topic defines *when the agent chooses to do it*.
 
 ---
+
+## 7. Versioning, Models, and Testing
+
+**Versions.** Edit by creating a new version and activating it, rather than overwriting. That gives you a rollback path and a record of what changed between behavior shifts. Admins who create and manage templates need the **Prompt Template Manager** permission set.
+
+**Model selection.** Different templates have different needs: a classification-style template may favor speed and cost, while a long summarization may favor quality. Compare candidate models on the same input in the preview before committing, and revisit the choice when new models become available.
+
+**Test in layers**, as with retrieval:
+
+1. **Resource output** on its own: is the grounding text correct, bounded, and readable?
+2. **Template preview** with real records: does the output follow the format?
+3. **Edge cases:** null fields, very long text, records with no related data, non-English content.
+4. **Version comparison:** run the same inputs on the old and new versions.
+5. **Agent level:** only then test through the agent, so you can tell template problems apart from routing problems.
+
+Keep a small golden set of records and expected qualities, and rerun it after every version or model change.
+
+---
+
