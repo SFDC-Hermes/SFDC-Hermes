@@ -192,3 +192,41 @@ Keep a small golden set of records and expected qualities, and rerun it after ev
 
 ---
 
+## 8. Common Pitfalls
+
+- Choosing the template type by habit instead of by entry points and inputs.
+- Building a Flex template without a Free Text input, then needing one later.
+- Dumping whole records into the prompt instead of selecting fields.
+- Returning unbounded text from Flow or Apex.
+- Giving no behavior for empty data, so the model fills the gap.
+- Changing a resource's inputs without updating the template.
+- Mixing multiple tasks in one template.
+- Testing only with a clean "happy path" record.
+
+## Production Checklist
+
+- [ ] Template type matches the required inputs and entry points.
+- [ ] Flex templates include at least one Free Text input.
+- [ ] Each resource uses the simplest provider that works.
+- [ ] Flow or Apex output is bounded, selective, and has an explicit empty state.
+- [ ] Resource input names match the template input API names.
+- [ ] Instructions contain role, task, constraints, output format, and a fallback.
+- [ ] Preview-tested with edge cases and on the intended model.
+- [ ] Action name and instruction are specific enough for routing.
+- [ ] Versioned, with the active version documented.
+
+---
+
+## Conclusion
+
+A prompt template is a small, well-bounded interface between your data and a model. When its inputs are deliberate, its grounding is lean, and its instructions are structured, the same agent stays reliable as content and models evolve.
+
+In the next post, we move up to **Topic and Instruction design**: how to scope topics, write instructions the planner follows, and avoid the anti-patterns that make agents choose the wrong action.
+
+---
+
+### References
+
+- Salesforce Help: [Prompt Builder](https://help.salesforce.com/s/articleView?language=en_US&id=sf.prompt_builder_about.htm&type=5)
+- Salesforce Help: [Grounding with Apex Merge Fields](https://help.salesforce.com/s/articleView?id=sf.prompt_builder_ground_apex.htm&language=en_US&type=5)
+- Salesforce Break: [How To Build Flex and Field Generation Prompt Templates in the Prompt Builder](https://salesforcebreak.com/2025/04/10/how-to-build-flex-field-generation-prompt-templates-in-builder/)
