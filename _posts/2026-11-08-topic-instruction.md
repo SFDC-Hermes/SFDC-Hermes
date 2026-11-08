@@ -131,3 +131,29 @@ A quick contrast:
 The specific version gives the model a decision path. The vague version gives it a goal and leaves the path to chance.
 
 ---
+
+## 5. Deterministic vs. Non-Deterministic Control
+
+Instructions are natural language, which means they are **non-deterministic**. They are excellent for tone, phrasing, and conversational judgment. They are not a reliable place for rules that must hold every time.
+
+Agentforce addresses this with what Salesforce calls **hybrid reasoning**: deterministic logic for control, natural-language instructions for behavior. In the current builder, **Agent Script** brings both into one readable definition, so a subagent can mix fixed rules and LLM reasoning.
+
+| Belongs in deterministic logic | Belongs in instructions |
+|---|---|
+| Identity or eligibility checks that must always run | Tone, empathy, and phrasing |
+| Mandatory step order | How to ask clarifying questions |
+| Calculations and business rules | How to summarize results for the customer |
+| Moving to another subagent when a condition is met | Judgment calls in ambiguous conversations |
+| Hiding risky actions until conditions are met | Choosing among options when there is no hard rule |
+| Tracking state, such as whether a user is verified | Adapting explanations to the user's level |
+
+Several mechanisms make this concrete:
+
+- **Logic instructions** run an action or set a value every time a condition is true, while **prompt instructions** are passed to the model as guidance.
+- **Transitions** between subagents can be **deterministic** (triggered by a condition) or **exposed to the model** as a choice.
+- **Availability conditions** control whether an action is offered at all, and **user confirmation** can be required before a risky action runs.
+- **Variables** hold state reliably, instead of relying on the model to remember it from context.
+
+A useful boundary: if a process is fully static, with no conversational judgment involved, it probably belongs in **Flow** rather than in an agent at all.
+
+---
