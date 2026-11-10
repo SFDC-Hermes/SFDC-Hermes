@@ -157,3 +157,37 @@ Several mechanisms make this concrete:
 A useful boundary: if a process is fully static, with no conversational judgment involved, it probably belongs in **Flow** rather than in an agent at all.
 
 ---
+
+## 6. Action Design Inside a Subagent
+
+Within a selected subagent, the model chooses actions by reading their **descriptions**, which makes those descriptions as important as the Flow, Apex, or prompt template behind them.
+
+- **Describe inputs and outputs, not just the verb.** "Returns delivery status, carrier, and estimated arrival date for one order number" is far more useful than "Gets order info."
+- **Keep actions distinct.** Two actions with near-identical descriptions create the same collision problem as overlapping subagents.
+- **Design for repetition.** The reasoning engine may call an action more than once in a turn, so actions should be safe to repeat and inexpensive to run.
+- **Provide descriptions for every input.** When required inputs are not supplied, the model fills them from the conversation, and clear input descriptions make that extraction accurate.
+
+---
+
+## 7. Scoping With Filters
+
+Filters control which subagents, actions, and retrievers the model can see or use on a given turn. They can be **static** or **dynamic**. For retrieval, enhanced retriever pre-filters allow dynamic filtering per retriever, so a mortgage subagent, for example, searches only mortgage documents.
+
+Filters are the structural answer to a common failure mode: instructions that keep growing because each new edge case gets another sentence. Salesforce calls this a "prompt doom loop." When you find yourself adding rules to restrict what the model can do, ask whether a filter or a deterministic condition should remove the option instead.
+
+---
+
+## 8. Diagnosing Failures
+
+| Symptom | Layer | First fix |
+|---|---|---|
+| The request lands in the wrong subagent | Routing | Rewrite both competing descriptions to add the discriminating fact |
+| The right subagent is chosen, but it calls the wrong action | Action selection | Make action descriptions distinct; add decision criteria to instructions |
+| The right action runs, but a required step is sometimes skipped | Control | Move the step into deterministic logic |
+| Correct facts, wrong tone or format | Behavior | Adjust instructions |
+| A new subagent breaks routing for an old one | Routing | Review all descriptions together, including standard subagents |
+| Instructions keep getting longer and results do not improve | Design | Replace natural-language rules with filters, conditions, or transitions |
+
+One more rule: **test routing accuracy separately from answer quality.** A request handled by the wrong subagent can still produce a plausible answer, which hides the routing problem until it fails visibly. Testing at scale is the subject of a later post in this series.
+
+---
