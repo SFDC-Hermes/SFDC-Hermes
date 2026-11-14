@@ -191,3 +191,44 @@ Filters are the structural answer to a common failure mode: instructions that ke
 One more rule: **test routing accuracy separately from answer quality.** A request handled by the wrong subagent can still produce a plausible answer, which hides the routing problem until it fails visibly. Testing at scale is the subject of a later post in this series.
 
 ---
+
+## Anti-Patterns
+
+- Fixing routing errors by adding rules to instructions.
+- Overlapping or interchangeable descriptions.
+- Organizing subagents around data objects instead of user jobs.
+- Adding custom subagents without reviewing existing and standard ones.
+- Packing many jobs into one agent to avoid splitting it.
+- Leaving must-happen steps to the model's discretion.
+- Vague or near-identical action descriptions.
+- Assuming an action runs only once per turn.
+- Judging the agent only by final answers.
+
+## Design Checklist
+
+- [ ] Each subagent represents one user job, named by outcome.
+- [ ] The difference between any two subagents fits in one sentence.
+- [ ] Descriptions use customer language, state boundaries, and contrast with neighbors.
+- [ ] Instructions are short, define domain terms, and give decision criteria.
+- [ ] Mandatory steps, rules, and state are handled deterministically.
+- [ ] Risky actions are gated by availability conditions or user confirmation.
+- [ ] Every action and input has a specific description.
+- [ ] Filters restrict what the model can see where rules would otherwise pile up.
+- [ ] Routing accuracy is tested separately from response quality.
+
+---
+
+## Conclusion
+
+Agent quality is decided in two places: the descriptions that route a request, and the instructions and logic that shape what happens next. Keep the two separate in your design, and in your debugging. When routing is wrong, fix descriptions. When a rule must always hold, make it deterministic. Use natural-language instructions for what they do best: judgment, tone, and conversation.
+
+In the next post, we look at **action implementation patterns** with Apex, Flow, and prompt templates: how to design inputs and outputs, handle errors, and stay within platform limits.
+
+---
+
+### References
+
+- Salesforce Developers: [Agent Script](https://developer.salesforce.com/docs/ai/agentforce/guide/agent-script.html)
+- Salesforce: [Agentforce Guide to Context Engineering](https://www.salesforce.com/agentforce/guide/)
+- Nick Frates: [Agentforce Topics (Now Subagents) and Actions: How Agents Decide What to Do](https://nickfrates.com/agentforce-topics-and-actions/)
+- MindBlaze: [Why Your Agentforce Agent Keeps Picking the Wrong Topic](https://mindblaze.ai/blog/agentforce-subagents-topics-design/)
